@@ -1,0 +1,9 @@
+﻿accuracy,cer,character_error_rate_percent,evaluation,f1_positive_class_1,mean_ai_score_percent,message,n,precision_positive_class_1,recall_positive_class_1,smoke_test_passed,status,synthetic_detection_rate_percent,wer,word_error_rate_percent
+0.5,,,text_classifier_raw_model,0.6429,,,20,0.5,0.9,,OK,,,
+1.0,,,text_end_to_end_pipeline,1.0,,,20,1.0,1.0,,OK,,,
+,,,text_case_details,,,,,,,,OK,,,
+,,,visual_pipeline,,,,1,,,False,PARTIAL,,,
+,,,acoustic_detector,,91.6,,5,,,,PARTIAL,100.0,,
+,,,biometric_speaker_verification,,,"Add labelled pairs to evaluation/biometric_pairs.csv (reference_path,test_path,same_speaker).",,,,,SKIPPED,,,
+,0.0688,6.88,ocr_quality,,,,1,,,,PARTIAL,,0.125,12.5
+,,,nllb_translation,,,,4,,,,PARTIAL,,,

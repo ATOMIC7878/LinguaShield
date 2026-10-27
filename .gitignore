@@ -1,0 +1,129 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+
+# Python
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Logs and runtime output
+*.log
+logs/
+tmp/
+temp/
+*.pid
+
+# Frontend dependencies and generated output
+node_modules/
+.npm/
+.parcel-cache/
+.vite/
+.next/
+out/
+coverage/
+
+# Datasets and generated evaluation output
+datasets/
+data/raw/
+data/processed/
+evaluation/results/
+reports/generated/
+
+# Model weights/checkpoints (review before tracking)
+backend/models/
+models/
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.safetensors
+*.pkl
+*.joblib
+*.h5
+*.keras
+
+# User uploads and generated media
+uploads/
+outputs/
+artifacts/
+*.wav
+*.mp3
+*.flac
+*.mp4
+*.mov
+
+# Local databases and caches
+*.db
+*.sqlite
+*.sqlite3
+.cache/
+
+backend/dataset/massive_phishing.csv
+# Datasets
+backend/dataset/
+datasets/
+data/raw/
+data/processed/
+
+# Model files and weights
+backend/models/
+models/
+*.pkl
+*.joblib
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.h5
+*.keras
+
+# Local environment and secrets
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+node_modules/
+
+backend/dataset/
+datasets/
+data/raw/
+data/processed/
+backend/models/
+models/
+*.pkl
+*.joblib
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.safetensors

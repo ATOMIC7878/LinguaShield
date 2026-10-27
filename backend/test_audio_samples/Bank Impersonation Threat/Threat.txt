@@ -1,0 +1,1 @@
+“Hello, this is Rahul Sharma from the customer security team at ABC Bank. We detected suspicious activity on your account and an unauthorized transaction may be in progress. To secure your account immediately, please provide the OTP sent to your registered mobile number. This is urgent, and the verification must be completed now to prevent the transaction.”

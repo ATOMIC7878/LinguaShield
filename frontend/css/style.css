@@ -1,0 +1,497 @@
+/* =========================================================================
+   1. GLOBAL ARCHITECTURE & DESIGN SYSTEM VARIABLES
+   ========================================================================= */
+:root {
+    /* The Calming Guardian Color Scheme */
+    --bg-primary: #F8FAFC;
+    /* Off-white canvas to minimize macular strain */
+    --bg-card: #FFFFFF;
+    /* Stark clean container blocks */
+    --text-main: #0F172A;
+    /* High-contrast dark charcoal */
+    --text-muted: #475569;
+    /* Slate tone for non-critical descriptors */
+    --color-navy: #1E3A8A;
+    /* Institutional authority blue */
+    --color-teal: #0D9488;
+    /* Confident defense safety marker */
+    --color-coral: #DC2626;
+    /* High-visibility alarm indicator */
+
+    /* Standard Layout Sizing Models (Ages 18-59) */
+    --base-font-size: 16px;
+    --line-height: 1.5;
+    --target-padding: 12px 24px;
+    --card-padding: 24px;
+    --element-gap: 16px;
+    --logo-size: 36px;
+}
+
+/* =========================================================================
+   2. ACCESSIBILITY OVERRIDES: SENIOR PROFILE MODE (Ages 60+)
+   ========================================================================= */
+body.senior-mode {
+    --base-font-size: 22px;
+    /* Sharp magnification for older eyes */
+    --line-height: 1.75;
+    /* Deep line spacing to stop visual skipping */
+    --target-padding: 18px 36px;
+    /* Massive target footprints for low motor control */
+    --card-padding: 32px;
+    --element-gap: 24px;
+    --logo-size: 52px;
+}
+
+/* =========================================================================
+   3. STRUCTURAL RESETS & ROOT UTILITIES
+   ========================================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: var(--base-font-size);
+    line-height: var(--line-height);
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    transition: all 0.25s ease;
+    /* Fluid UI scaling transitions */
+}
+
+.main-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--element-gap);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================================================
+   4. BRAND HEADER & PROFILE INTERACTION SECTION
+   ========================================================================= */
+.app-header {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid #E2E8F0;
+    padding: var(--card-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.app-logo {
+    width: var(--logo-size);
+    height: var(--logo-size);
+    transition: all 0.2s ease;
+}
+
+.brand-container h1 {
+    font-size: calc(var(--base-font-size) * 1.4);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.text-navy {
+    color: var(--color-navy);
+}
+
+.text-teal {
+    color: var(--color-teal);
+}
+
+.profile-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-right: 8px;
+}
+
+.profile-dropdown {
+    padding: 8px 12px;
+    border: 2px solid #CBD5E1;
+    border-radius: 8px;
+    background-color: var(--bg-card);
+    font-size: calc(var(--base-font-size) * 0.9);
+    font-weight: 600;
+    color: var(--color-navy);
+    cursor: pointer;
+    outline: none;
+}
+
+.profile-dropdown:focus {
+    border-color: var(--color-teal);
+}
+
+/* =========================================================================
+   5. WORKSPACE CONTAINER BOARDS & MODAL TABS
+   ========================================================================= */
+.intro-card {
+    background: linear-gradient(135deg, #EFF6FF, #F0FDFA);
+    border: 1px solid #E2E8F0;
+    padding: var(--card-padding);
+    border-radius: 12px;
+}
+
+.intro-card h2 {
+    font-size: calc(var(--base-font-size) * 1.3);
+    color: var(--color-navy);
+    margin-bottom: 8px;
+}
+
+.intro-text {
+    color: var(--text-muted);
+}
+
+.audit-workspace {
+    background-color: var(--bg-card);
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+}
+
+.tab-header {
+    display: flex;
+    background-color: #F1F5F9;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: var(--target-padding);
+    border: none;
+    background: none;
+    font-size: calc(var(--base-font-size) * 0.95);
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background-color: var(--bg-card);
+    color: var(--color-navy);
+    border-top: 3px solid var(--color-navy);
+    font-weight: 700;
+}
+
+.tab-body {
+    padding: var(--card-padding);
+}
+
+.tab-pane {
+    display: none;
+    flex-direction: column;
+    gap: var(--element-gap);
+}
+
+.tab-pane.active {
+    display: flex;
+}
+
+/* Input Fields and Interactive Button Controls */
+.input-instruction {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.text-input-field {
+    width: 100%;
+    height: 150px;
+    padding: 16px;
+    border: 2px solid #E2E8F0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--text-main);
+    resize: vertical;
+    outline: none;
+    background-color: #FAFAFA;
+}
+
+.text-input-field:focus {
+    border-color: var(--color-navy);
+    background-color: var(--bg-card);
+}
+
+.action-btn {
+    background-color: var(--color-teal);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: var(--target-padding);
+    font-size: var(--base-font-size);
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2);
+    transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: #0F766E;
+}
+
+.action-btn:active {
+    transform: scale(0.98);
+}
+
+/* =========================================================================
+   6. FILE DROPZONE INTERFACE CORRIDOR
+   ========================================================================= */
+.dropzone-area {
+    border: 3px dashed #CBD5E1;
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    background-color: #F8FAFC;
+    cursor: pointer;
+    position: relative;
+}
+
+.dropzone-area:hover {
+    border-color: var(--color-teal);
+    background-color: #F0FDFA;
+}
+
+.hidden-file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.dropzone-icon {
+    font-size: calc(var(--base-font-size) * 2);
+}
+
+.dropzone-text {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.file-status-tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: calc(var(--base-font-size) * 0.8);
+    padding: 4px 12px;
+    background-color: #E2E8F0;
+    border-radius: 20px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+/* =========================================================================
+   7. RESULTS ENGINE REPORT & PROGRESS METER GRIDS
+   ========================================================================= */
+.result-display-wrapper {
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.result-card {
+    background-color: var(--bg-card);
+    border: 2px solid var(--color-navy);
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.1);
+    overflow: hidden;
+}
+
+.result-header {
+    background-color: var(--color-navy);
+    color: #FFFFFF;
+    padding: var(--card-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-badge {
+    background-color: #10B981;
+    color: white;
+    padding: 6px 16px;
+    font-weight: 800;
+    border-radius: 20px;
+    font-size: calc(var(--base-font-size) * 0.85);
+    letter-spacing: 0.5px;
+}
+
+.status-badge.scam-alert {
+    background-color: var(--color-coral);
+    animation: subtlePulse 2s infinite;
+}
+
+.result-body {
+    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--element-gap);
+}
+
+/* Metrics Dashboard Grid Layout */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--element-gap);
+}
+
+.metric-card {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.metric-card h4 {
+    font-size: calc(var(--base-font-size) * 0.85);
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.progress-bar-bg {
+    background-color: #E2E8F0;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.progress-bar-fill {
+    background-color: var(--color-teal);
+    height: 100%;
+    width: 0%;
+    /* Dynamic expansion via JS initialization */
+    transition: width 0.6s ease;
+}
+
+.progress-bar-fill.alert {
+    background-color: var(--color-coral);
+}
+
+.metric-label {
+    font-weight: 800;
+    font-size: var(--base-font-size);
+}
+
+/* Code and Extracted Content Footprints */
+.payload-log-box {
+    background-color: #0F172A;
+    color: #E2E8F0;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.payload-log-box h4 {
+    color: #94A3B8;
+    font-size: calc(var(--base-font-size) * 0.8);
+    margin-bottom: 6px;
+}
+
+#outputExtractedText {
+    font-family: monospace;
+    white-space: pre-wrap;
+    font-size: calc(var(--base-font-size) * 0.9);
+}
+
+/* Senior Custom Statement Display Frame */
+.summary-statement-box {
+    background-color: #FEF2F2;
+    border-left: 6px solid var(--color-coral);
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.summary-statement-box p {
+    font-weight: 700;
+    color: #7F1D1D;
+}
+
+/* =========================================================================
+   8. LOCAL SECURITY ACTION WIDGET & SAFETY ANCHOR
+   ========================================================================= */
+.emergency-safety-hub {
+    display: flex;
+    gap: 16px;
+    background-color: #FFF5F5;
+    border: 2px dashed var(--color-coral);
+    padding: var(--card-padding);
+    border-radius: 8px;
+    align-items: center;
+}
+
+.emergency-icon {
+    font-size: calc(var(--base-font-size) * 2.5);
+}
+
+.emergency-details h4 {
+    color: #991B1B;
+    font-size: calc(var(--base-font-size) * 1.1);
+    margin-bottom: 4px;
+}
+
+.emergency-details p {
+    color: #7F1D1D;
+    margin-bottom: 12px;
+}
+
+.helpline-badge {
+    display: inline-block;
+    background-color: var(--color-coral);
+    color: #FFFFFF;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: calc(var(--base-font-size) * 1.1);
+}
+
+.helpline-badge strong {
+    font-size: calc(var(--base-font-size) * 1.4);
+}
+
+/* =========================================================================
+   9. INTERACTION MICRO-ANIMATIONS
+   ========================================================================= */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes subtlePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+    }
+}

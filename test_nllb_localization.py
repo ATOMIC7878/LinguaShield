@@ -1,0 +1,25 @@
+﻿from backend.localization.translation_ops import translate_content_to_english
+
+tests = [
+    ("HI", "\u0905\u092a\u0928\u093e OTP \u0905\u092d\u0940 \u092d\u0947\u091c\u0947\u0902\u0964"),
+    ("HI", "\u0905\u092a\u0928\u093e OTP \u0915\u093f\u0938\u0940 \u0915\u094b \u0938\u093e\u091d\u093e \u0928 \u0915\u0930\u0947\u0902\u0964"),
+    ("HI", "\u0906\u092a\u0915\u093e \u092c\u0948\u0902\u0915 \u0916\u093e\u0924\u093e \u092c\u0902\u0926 \u0915\u0930 \u0926\u093f\u092f\u093e \u0917\u092f\u093e \u0939\u0948\u0964 \u0907\u0938\u0947 \u0924\u0941\u0930\u0902\u0924 \u0938\u0924\u094d\u092f\u093e\u092a\u093f\u0924 \u0915\u0930\u0947\u0902\u0964"),
+    ("MR", "\u0924\u0941\u092e\u091a\u093e OTP \u0906\u0924\u094d\u0924\u093e\u091a \u092a\u093e\u0920\u0935\u093e."),
+    ("MR", "\u0924\u0941\u092e\u091a\u093e OTP \u0915\u094b\u0923\u093e\u0938\u094b\u092c\u0924\u0939\u0940 \u0936\u0947\u0905\u0930 \u0915\u0930\u0942 \u0928\u0915\u093e."),
+    ("MR", "\u0924\u0941\u092e\u091a\u0947 \u092c\u0901\u0915 \u0916\u093e\u0924\u0947 \u092c\u0902\u0926 \u0915\u0930\u0923\u094d\u092f\u093e\u0924 \u0906\u0932\u0947 \u0906\u0939\u0947. \u0924\u094d\u0935\u0930\u093f\u0924 \u0938\u0924\u094d\u092f\u093e\u092a\u093f\u0924 \u0915\u0930\u093e.")
+]
+
+print("=" * 70)
+print("LINGUASHIELD - ACTUAL NLLB LOCALIZATION TEST")
+print("=" * 70)
+
+for lang, text in tests:
+    source = "hin_Deva" if lang == "HI" else "mar_Deva"
+    print("\n" + "-" * 70)
+    print(lang, "INPUT :", text)
+    result = translate_content_to_english(text, source)
+    print("ENGLISH :", result)
+
+print("\n" + "=" * 70)
+print("LOCALIZATION TEST COMPLETE")
+print("=" * 70)

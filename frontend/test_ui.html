@@ -1,0 +1,5808 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#090a0c">
+    <meta name="description" content="LinguaShield forensic intelligence experience">
+    <title>LinguaShield</title>
+    <link rel="icon" type="image/png" href="LS.png">
+    <link rel="apple-touch-icon" href="LS.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ================================================================
+   LINGUASHIELD / ENTERPRISE DESIGN SYSTEM
+   Single source of truth. No revision overrides.
+   ================================================================ */
+        :root {
+            --bg: #090a0c;
+            --bg-1: #0d0f12;
+            --bg-2: #121519;
+            --ink: #f2f0eb;
+            --muted: #9b9e99;
+            --soft: #737771;
+            --faint: #4c504c;
+            --line: rgba(242, 240, 235, .11);
+            --line-strong: rgba(242, 240, 235, .20);
+
+            --signal: #ef6c2f;
+            --signal-2: #ff985d;
+            --info: #79c5cf;
+            --positive: #7eb48b;
+            --warning: #d5b36b;
+            --critical: #d96b63;
+
+            --display: "Sora", sans-serif;
+            --ui: "Inter Tight", sans-serif;
+            --mono: "IBM Plex Mono", monospace;
+
+            --ease: cubic-bezier(.22, .61, .36, 1);
+            --ease-out: cubic-bezier(.16, 1, .3, 1);
+
+            --content: min(1440px, calc(100vw - 96px));
+            --topbar: 72px;
+            --lui-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            background: var(--bg);
+            scroll-behavior: auto
+        }
+
+        body {
+            margin: 0;
+            min-width: 320px;
+            overflow-x: hidden;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 76% 9%, rgba(121, 197, 207, .045), transparent 24%),
+                radial-gradient(circle at 18% 42%, rgba(239, 108, 47, .035), transparent 28%),
+                var(--bg);
+            font-family: var(--ui);
+        }
+
+        body.modal-open {
+            overflow: hidden
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit
+        }
+
+        button {
+            color: inherit
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        ::selection {
+            background: rgba(239, 108, 47, .24);
+            color: #fff
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--signal);
+            outline-offset: 3px
+        }
+
+        .app-shell {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .topbar {
+            position: absolute;
+            left: 24px;
+            right: 24px;
+            top: 20px;
+            height: var(--topbar);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            padding: 0 16px;
+            border: 1px solid var(--line);
+            background: rgba(9, 10, 12, .78);
+            backdrop-filter: blur(18px);
+            pointer-events: auto;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 0
+        }
+
+        .brand-logo {
+            display: block;
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            object-position: center;
+            flex: 0 0 auto;
+            image-rendering: auto;
+            filter: none;
+        }
+
+        .brand-name {
+            display: block;
+            font: 600 14px var(--display);
+            letter-spacing: .13em;
+            line-height: 1;
+            white-space: nowrap;
+            color: var(--ink);
+        }
+
+        .brand-name span {
+            color: var(--signal);
+        }
+
+        .brand-mark {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--signal);
+            position: relative;
+            flex: 0 0 auto;
+            transform: rotate(45deg);
+        }
+
+        .brand-mark:before,
+        .brand-mark:after {
+            content: "";
+            position: absolute;
+            background: var(--signal);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .brand-mark:before {
+            width: 1px;
+            height: 19px
+        }
+
+        .brand-mark:after {
+            width: 19px;
+            height: 1px
+        }
+
+        .brand-name {
+            font: 600 13px var(--display);
+            letter-spacing: .16em;
+            white-space: nowrap;
+        }
+
+
+
+        .primary-nav {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            min-width: 0;
+        }
+
+        .primary-nav a {
+            position: relative;
+            padding: 21px 0;
+            font: 500 9px var(--mono);
+            letter-spacing: .10em;
+            text-transform: uppercase;
+            color: var(--soft);
+        }
+
+        .primary-nav a:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 13px;
+            height: 1px;
+            background: var(--signal);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .35s var(--ease);
+        }
+
+        .primary-nav a[aria-current="true"],
+        .primary-nav a:hover {
+            color: #fff
+        }
+
+        .primary-nav a[aria-current="true"]:after {
+            transform: scaleX(1)
+        }
+
+        .global-progress {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            height: 2px;
+            background: rgba(255, 255, 255, .045);
+        }
+
+        .global-progress span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transform: scaleX(0);
+            transform-origin: left;
+            background: linear-gradient(90deg, var(--signal), var(--signal-2));
+        }
+
+        .lui {
+            position: absolute;
+            right: 24px;
+            bottom: 24px;
+            width: var(--lui-width);
+            border: 1px solid var(--line);
+            background: rgba(10, 12, 14, .90);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 18px 54px rgba(0, 0, 0, .34);
+            pointer-events: auto;
+        }
+
+        .lui-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .lui-persona {
+            display: flex;
+            align-items: center;
+            gap: 9px
+        }
+
+        .lui-face {
+            width: 25px;
+            height: 25px;
+            border: 1px solid var(--line-strong);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, #191c20, #0b0d0f);
+        }
+
+        .lui-face:before {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1px solid rgba(242, 240, 235, .56);
+            border-radius: 50%;
+            left: 50%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+        }
+
+        .lui-face:after {
+            content: "";
+            position: absolute;
+            left: 5px;
+            right: 5px;
+            bottom: 4px;
+            height: 1px;
+            background: var(--signal);
+        }
+
+        .lui-name {
+            font: 600 10px var(--display);
+            letter-spacing: .10em
+        }
+
+        .lui-role {
+            margin-top: 2px;
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--faint)
+        }
+
+        .lui-state {
+            font: 500 8px var(--mono);
+            letter-spacing: .07em;
+            color: var(--info)
+        }
+
+        .lui-body {
+            padding: 14px 15px 15px
+        }
+
+        .lui-message {
+            margin: 0;
+            color: #d9d9d4;
+            font-size: 13px;
+            line-height: 1.48
+        }
+
+        .lui-meta {
+            display: block;
+            margin-top: 10px;
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--faint)
+        }
+
+        .lui-meter {
+            height: 2px;
+            margin-top: 12px;
+            background: rgba(255, 255, 255, .07)
+        }
+
+        .lui-meter span {
+            display: block;
+            width: 0;
+            height: 100%;
+            background: var(--signal);
+            transition: width .7s var(--ease)
+        }
+
+        .page-note {
+            position: fixed;
+            left: 24px;
+            bottom: 24px;
+            z-index: 90;
+            font: 500 8px var(--mono);
+            letter-spacing: .09em;
+            color: rgba(242, 240, 235, .30);
+            pointer-events: none;
+        }
+
+        .page-note span {
+            color: var(--signal)
+        }
+
+        .scene {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .scene--tall {
+            min-height: 185vh
+        }
+
+        .scene--hero {
+            min-height: 260vh
+        }
+
+        .scene--light {
+            background: #eceae4;
+            color: #171816
+        }
+
+        .scene--light .eyebrow {
+            color: #767a73
+        }
+
+        .scene--light .lede {
+            color: #535852
+        }
+
+        .scene-stage {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .scene-inner {
+            width: var(--content);
+            margin: 0 auto;
+            padding: 0 8px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .copy {
+            max-width: 840px
+        }
+
+        .eyebrow {
+            font: 500 9px var(--mono);
+            letter-spacing: .17em;
+            text-transform: uppercase;
+            color: var(--faint);
+        }
+
+        .eyebrow:before {
+            content: "";
+            display: inline-block;
+            width: 25px;
+            height: 1px;
+            background: var(--signal);
+            margin: 0 9px 3px 0;
+        }
+
+        .display {
+            margin: 15px 0 0;
+            font: 600 clamp(54px, 7vw, 118px)/.91 var(--display);
+            letter-spacing: -.07em;
+        }
+
+        .display em {
+            font-style: normal;
+            color: var(--signal)
+        }
+
+        .lede {
+            max-width: 680px;
+            margin: 26px 0 0;
+            color: #b7bab4;
+            font-size: 17px;
+            line-height: 1.55;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 28px
+        }
+
+        .btn {
+            appearance: none;
+            border: 1px solid var(--line-strong);
+            background: rgba(255, 255, 255, .025);
+            padding: 12px 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font: 600 9px var(--mono);
+            letter-spacing: .09em;
+            transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, .32);
+            background: rgba(255, 255, 255, .055)
+        }
+
+        .btn--primary {
+            background: var(--signal);
+            color: #140b06;
+            border-color: var(--signal);
+            box-shadow: 0 10px 28px rgba(239, 108, 47, .10)
+        }
+
+        .btn--primary:hover {
+            background: var(--signal-2);
+            box-shadow: 0 14px 34px rgba(239, 108, 47, .18)
+        }
+
+        .story-progress {
+            position: absolute;
+            left: 0;
+            bottom: 7.5vh;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font: 500 8px var(--mono);
+            letter-spacing: .10em;
+            color: var(--soft);
+            z-index: 5
+        }
+
+        .story-progress i {
+            display: block;
+            width: 28px;
+            height: 1px;
+            background: var(--signal)
+        }
+
+        .scene-shell {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .scene-shell:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, transparent 32%, rgba(0, 0, 0, .16) 64%, rgba(0, 0, 0, .54) 100%);
+        }
+
+        .hero-canvas {
+            position: absolute;
+            inset: 0
+        }
+
+        #evidenceCanvas {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .hero-copy {
+            width: min(1100px, 74vw)
+        }
+
+        .hero-title {
+            max-width: 1120px
+        }
+
+        .hero-title .line {
+            display: block;
+            white-space: nowrap
+        }
+
+        .hero-instrument {
+            position: absolute;
+            right: 7vw;
+            top: 20vh;
+            width: min(32vw, 480px);
+            aspect-ratio: 1;
+            z-index: 1;
+            opacity: .72;
+            pointer-events: none;
+            transform: translateZ(0);
+        }
+
+        .instrument-ring {
+            position: absolute;
+            inset: 6%;
+            border: 1px solid rgba(239, 108, 47, .18);
+            border-radius: 50%;
+            background:
+                radial-gradient(circle, rgba(239, 108, 47, .06) 0 1px, transparent 2px) 50% 50%/11px 11px,
+                conic-gradient(from 0deg, transparent 0 21%, rgba(239, 108, 47, .38) 22%, transparent 23% 49%, rgba(121, 197, 207, .26) 50%, transparent 51% 100%);
+        }
+
+        .instrument-ring:before,
+        .instrument-ring:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(242, 240, 235, .11);
+            border-radius: 50%;
+        }
+
+        .instrument-ring:before {
+            width: 56%;
+            height: 56%
+        }
+
+        .instrument-ring:after {
+            width: 23%;
+            height: 23%;
+            border-color: rgba(239, 108, 47, .44)
+        }
+
+        .instrument-cross:before,
+        .instrument-cross:after {
+            content: "";
+            position: absolute;
+            background: rgba(242, 240, 235, .17);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .instrument-cross:before {
+            width: 64%;
+            height: 1px
+        }
+
+        .instrument-cross:after {
+            width: 1px;
+            height: 64%
+        }
+
+        .instrument-center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 62px;
+            height: 62px;
+            border: 1px solid rgba(239, 108, 47, .72);
+            background: rgba(9, 10, 12, .68);
+            transform: translate(-50%, -50%) rotate(45deg);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 35px rgba(239, 108, 47, .10);
+        }
+
+        .instrument-center:before {
+            content: "";
+            width: 25px;
+            height: 25px;
+            border: 1px solid rgba(242, 240, 235, .50)
+        }
+
+        .instrument-center span {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            transform: rotate(-45deg);
+            font: 600 7px var(--mono);
+            letter-spacing: .10em;
+            color: var(--signal);
+        }
+
+        .instrument-beam {
+            position: absolute;
+            left: 9%;
+            right: 9%;
+            top: 50%;
+            height: 1px;
+            transform: translateY(-50%);
+            background: linear-gradient(90deg, transparent, var(--signal), transparent);
+            opacity: .5;
+        }
+
+        .instrument-label {
+            position: absolute;
+            font: 500 7px var(--mono);
+            letter-spacing: .10em;
+            color: rgba(242, 240, 235, .40);
+        }
+
+        .instrument-label--a {
+            left: 11%;
+            top: 19%
+        }
+
+        .instrument-label--b {
+            right: 2%;
+            top: 55%
+        }
+
+        .instrument-label--c {
+            left: 28%;
+            bottom: 8%
+        }
+
+        .hero-forensic-icons {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-forensic-icon {
+            position: absolute;
+            width: clamp(106px, 8vw, 148px);
+            aspect-ratio: 1;
+            opacity: .46;
+            color: rgba(242, 240, 235, .48);
+            filter: drop-shadow(0 0 16px rgba(0, 0, 0, .18));
+            transform: translate3d(0, 0, 0);
+            will-change: transform, opacity;
+        }
+
+        .hero-forensic-icon svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .hero-forensic-icon path,
+        .hero-forensic-icon rect,
+        .hero-forensic-icon circle {
+            vector-effect: non-scaling-stroke;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.1;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .hero-forensic-icon .hfi-line,
+        .hero-forensic-icon .hfi-grid,
+        .hero-forensic-icon .hfi-ticks {
+            opacity: .44;
+        }
+
+        .hero-forensic-icon .hfi-dot {
+            fill: currentColor;
+            stroke: none;
+        }
+
+        .hero-forensic-icon .hfi-bracket,
+        .hero-forensic-icon .hfi-scan {
+            opacity: .32;
+        }
+
+        .hero-forensic-icon .hfi-ring {
+            opacity: .34;
+        }
+
+        .hero-forensic-icon--claim {
+            left: 42%;
+            top: 28%;
+            color: rgba(239, 108, 47, .72);
+        }
+
+        .hero-forensic-icon--visual {
+            left: 56%;
+            top: 23%;
+            color: rgba(240, 238, 230, .66);
+        }
+
+        .hero-forensic-icon--acoustic {
+            left: 46%;
+            top: 64%;
+            color: rgba(121, 197, 207, .72);
+        }
+
+        .hero-forensic-icon--biometric {
+            left: 61%;
+            top: 60%;
+            color: rgba(126, 180, 139, .72);
+        }
+
+        .hero-forensic-icon--case {
+            left: 52%;
+            top: 43%;
+            width: clamp(122px, 9vw, 164px);
+            color: rgba(239, 108, 47, .46);
+            opacity: .38;
+        }
+
+        .hero-forensic-icon>span {
+            position: absolute;
+            right: -8px;
+            bottom: 6px;
+            font: 500 7px var(--mono);
+            letter-spacing: .16em;
+            color: currentColor;
+            opacity: .62;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-forensic-icon {
+                will-change: auto;
+            }
+        }
+
+        @media (max-width: 1080px) {
+            .hero-forensic-icon--claim {
+                left: 43%;
+                top: 30%;
+            }
+
+            .hero-forensic-icon--visual {
+                left: 59%;
+                top: 25%;
+            }
+
+            .hero-forensic-icon--acoustic {
+                left: 45%;
+                top: 64%;
+            }
+
+            .hero-forensic-icon--biometric {
+                left: 60%;
+                top: 60%;
+            }
+
+            .hero-forensic-icon--case {
+                left: 52%;
+                top: 45%;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .hero-forensic-icons {
+                opacity: .72;
+            }
+
+            .hero-forensic-icon {
+                width: 92px;
+                opacity: .28;
+            }
+
+            .hero-forensic-icon--claim {
+                left: 54%;
+                top: 26%;
+            }
+
+            .hero-forensic-icon--visual {
+                left: 70%;
+                top: 22%;
+            }
+
+            .hero-forensic-icon--acoustic {
+                left: 48%;
+                top: 67%;
+            }
+
+            .hero-forensic-icon--biometric {
+                left: 70%;
+                top: 64%;
+            }
+
+            .hero-forensic-icon--case {
+                left: 61%;
+                top: 46%;
+                width: 110px;
+            }
+        }
+
+        .hero-aside {
+            position: absolute;
+            right: 7vw;
+            top: 19vh;
+            width: 220px;
+            padding-left: 13px;
+            border-left: 1px solid rgba(239, 108, 47, .55);
+            z-index: 4;
+            opacity: .78;
+        }
+
+        .hero-aside span {
+            display: block;
+            font: 500 7px var(--mono);
+            letter-spacing: .11em;
+            color: var(--faint)
+        }
+
+        .hero-aside strong {
+            display: block;
+            margin-top: 5px;
+            font: 600 12px var(--display)
+        }
+
+        .hero-aside p {
+            margin: 6px 0 0;
+            font: 500 9px/1.45 var(--mono);
+            color: var(--muted)
+        }
+
+        .text-stage .scene-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(260px, .65fr);
+            gap: 8vw;
+            align-items: end
+        }
+
+        .signal-quote {
+            margin-top: 32px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+            font: 500 12px/1.55 var(--mono);
+            color: #d4d5d0;
+            max-width: 660px
+        }
+
+        .signal-quote mark {
+            background: rgba(239, 108, 47, .16);
+            color: #fff;
+            padding: 1px 2px
+        }
+
+        .context-column {
+            border-left: 1px solid var(--line);
+            padding-left: 18px
+        }
+
+        .context-column strong {
+            font: 600 10px var(--mono);
+            letter-spacing: .12em;
+            text-transform: uppercase
+        }
+
+        .context-column p {
+            font-size: 12px;
+            line-height: 1.56;
+            color: #9ea19b;
+            margin: 10px 0 0
+        }
+
+        .metric-line {
+            display: flex;
+            gap: 24px;
+            margin-top: 18px
+        }
+
+        .metric-line div {
+            display: flex;
+            flex-direction: column;
+            gap: 3px
+        }
+
+        .metric-line span {
+            font: 500 8px var(--mono);
+            color: var(--faint);
+            letter-spacing: .08em
+        }
+
+        .metric-line strong {
+            font: 600 12px var(--mono)
+        }
+
+        .visual-stage .scene-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
+            gap: 8vw;
+            align-items: center
+        }
+
+        .visual-stack {
+            position: relative;
+            height: 58vh
+        }
+
+        .sheet {
+            position: absolute;
+            width: 78%;
+            height: 78%;
+            padding: 22px;
+            background: #f4f2ec;
+            border: 1px solid #c9c7bf;
+            box-shadow: 0 26px 60px rgba(0, 0, 0, .10);
+        }
+
+        .sheet:nth-child(1) {
+            left: 0;
+            top: 0;
+            transform: rotate(-5deg)
+        }
+
+        .sheet:nth-child(2) {
+            left: 11%;
+            top: 10%;
+            transform: rotate(3deg)
+        }
+
+        .sheet:nth-child(3) {
+            left: 22%;
+            top: 20%;
+            transform: rotate(-1deg)
+        }
+
+        .sheet-label {
+            font: 500 8px var(--mono);
+            letter-spacing: .10em;
+            color: #858982
+        }
+
+        .sheet-title {
+            margin-top: 7px;
+            font: 600 14px var(--display)
+        }
+
+        .sheet-rule {
+            height: 1px;
+            background: #d3d0c8;
+            margin: 15px 0
+        }
+
+        .sheet-copy {
+            font-size: 11px;
+            line-height: 1.55;
+            color: #5c605a
+        }
+
+        .sheet-data {
+            margin-top: 13px;
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: #767a74
+        }
+
+        .sheet-data b {
+            font-weight: 500;
+            color: #171816
+        }
+
+        .sheet-image {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
+            top: 50%;
+            background:
+                linear-gradient(135deg, rgba(239, 108, 47, .10), transparent 48%),
+                repeating-linear-gradient(90deg, rgba(23, 24, 22, .07) 0 1px, transparent 1px 9px),
+                #e7e5de;
+            border: 1px solid #d1cec5;
+        }
+
+        .sheet-image:after {
+            content: "VISIBLE CONTENT";
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            font: 500 7px var(--mono);
+            letter-spacing: .08em;
+            color: #777b74;
+        }
+
+        .acoustic-stage .scene-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(360px, .72fr);
+            gap: 8.5vw;
+            align-items: center
+        }
+
+        .acoustic-readout {
+            border-top: 1px solid var(--line);
+            padding-top: 14px;
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px 18px;
+        }
+
+        .acoustic-readout span {
+            font: 500 8px var(--mono);
+            color: var(--faint);
+            letter-spacing: .08em
+        }
+
+        .acoustic-readout strong {
+            font: 600 10px var(--mono)
+        }
+
+        .acoustic-visual {
+            width: min(100%, 760px);
+            border: 1px solid var(--line);
+            padding: 17px 17px 13px;
+            background:
+                radial-gradient(circle at 58% 48%, rgba(121, 197, 207, .045), transparent 34%),
+                rgba(7, 9, 11, .72);
+        }
+
+        .signal-panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .signal-panel-head span {
+            font: 500 8px var(--mono);
+            letter-spacing: .12em;
+            color: var(--faint)
+        }
+
+        .signal-panel-head b {
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--info)
+        }
+
+        .spectral-wavefield {
+            position: relative;
+            height: 360px;
+            margin-top: 2px;
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, transparent 49.7%, rgba(242, 240, 235, .065) 50%, transparent 50.3%),
+                linear-gradient(90deg, rgba(9, 10, 12, .58), transparent 10%, transparent 90%, rgba(9, 10, 12, .58));
+        }
+
+        .spectral-grid {
+            position: absolute;
+            inset: 0;
+            opacity: .65;
+            background:
+                repeating-linear-gradient(90deg,
+                    transparent 0 17px,
+                    rgba(242, 240, 235, .035) 17px 18px),
+                repeating-linear-gradient(0deg,
+                    transparent 0 36px,
+                    rgba(242, 240, 235, .026) 36px 37px);
+        }
+
+        .spectral-grid:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 55% 52%, transparent 0 22%, rgba(9, 10, 12, .12) 65%, rgba(9, 10, 12, .48) 100%)
+        }
+
+        .spectral-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .trace {
+            fill: none;
+            stroke-linecap: round;
+            vector-effect: non-scaling-stroke;
+        }
+
+        .trace--amber {
+            stroke: #d5b36b;
+            stroke-width: 2.2;
+            opacity: .68;
+            filter: drop-shadow(0 0 5px rgba(213, 179, 107, .14))
+        }
+
+        .trace--cyan {
+            stroke: #79c5cf;
+            stroke-width: 2.1;
+            opacity: .84;
+            filter: drop-shadow(0 0 5px rgba(121, 197, 207, .13))
+        }
+
+        .trace--critical {
+            stroke: #d96b63;
+            stroke-width: 2.2;
+            opacity: .72;
+            filter: drop-shadow(0 0 5px rgba(217, 107, 99, .12))
+        }
+
+        .trace--amber,
+        .trace--cyan,
+        .trace--critical {
+            stroke-dasharray: 900;
+            stroke-dashoffset: 0;
+        }
+
+        .trace--amber {
+            animation: signalTraceA 9s ease-in-out infinite
+        }
+
+        .trace--cyan {
+            animation: signalTraceB 7.5s ease-in-out infinite
+        }
+
+        .trace--critical {
+            animation: signalTraceC 8.5s ease-in-out infinite
+        }
+
+        @keyframes signalTraceA {
+
+            0%,
+            100% {
+                transform: translate3d(-1.5%, 0, 0);
+                opacity: .55
+            }
+
+            50% {
+                transform: translate3d(1.5%, -2px, 0);
+                opacity: .84
+            }
+        }
+
+        @keyframes signalTraceB {
+
+            0%,
+            100% {
+                transform: translate3d(-1%, 1px, 0);
+                opacity: .68
+            }
+
+            50% {
+                transform: translate3d(1.8%, -1px, 0);
+                opacity: .98
+            }
+        }
+
+        @keyframes signalTraceC {
+
+            0%,
+            100% {
+                transform: translate3d(-1%, 0, 0);
+                opacity: .56
+            }
+
+            50% {
+                transform: translate3d(1.2%, 2px, 0);
+                opacity: .82
+            }
+        }
+
+        .spectral-cursor {
+            position: absolute;
+            top: 9%;
+            bottom: 12%;
+            left: 68%;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(121, 197, 207, .60) 35%, rgba(121, 197, 207, .70) 50%, transparent 65%);
+            opacity: .42;
+        }
+
+        .spectral-cursor:after {
+            content: "";
+            position: absolute;
+            left: -2px;
+            top: 50%;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #79c5cf;
+            box-shadow: 0 0 12px rgba(121, 197, 207, .58)
+        }
+
+        .spectral-scale {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 3px;
+            color: #50554f;
+            font: 500 7px var(--mono);
+            letter-spacing: .10em;
+        }
+
+        .spectral-readout {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding-top: 11px;
+            border-top: 1px solid var(--line);
+            color: #656a64;
+            font: 500 7px var(--mono);
+            letter-spacing: .07em;
+        }
+
+        .spectral-readout span {
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .spectral-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            display: inline-block
+        }
+
+        .spectral-dot--amber {
+            background: #d5b36b
+        }
+
+        .spectral-dot--cyan {
+            background: #79c5cf
+        }
+
+        .spectral-dot--critical {
+            background: #d96b63
+        }
+
+        .spectral-time {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 9px;
+            color: #4d514d;
+            font: 500 7px var(--mono);
+            letter-spacing: .08em
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+
+            .trace--amber,
+            .trace--cyan,
+            .trace--critical {
+                animation: none !important
+            }
+        }
+
+        @media (max-width:1080px) {
+            .acoustic-stage .scene-inner {
+                grid-template-columns: 1fr;
+                gap: 30px
+            }
+
+            .acoustic-visual {
+                width: min(100%, 760px);
+                justify-self: end
+            }
+        }
+
+        @media (max-width:720px) {
+            .spectral-wavefield {
+                height: 280px
+            }
+
+            .spectral-readout {
+                flex-direction: column;
+                gap: 8px
+            }
+        }
+
+        .biometric-stage .scene-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(300px, .62fr);
+            gap: 9vw;
+            align-items: end
+        }
+
+        .identity-compare {
+            border-top: 1px solid var(--line);
+            margin-top: 28px;
+            padding-top: 14px
+        }
+
+        .identity-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 14px;
+            align-items: center
+        }
+
+        .identity-side {
+            padding: 12px 0
+        }
+
+        .identity-side span {
+            display: block;
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--faint)
+        }
+
+        .identity-side strong {
+            display: block;
+            margin-top: 6px;
+            font: 600 12px var(--display)
+        }
+
+        .identity-center {
+            font: 500 9px var(--mono);
+            letter-spacing: .1em;
+            color: var(--critical)
+        }
+
+        .identity-note {
+            margin-top: 12px;
+            font: 500 9px/1.5 var(--mono);
+            color: #8f928c
+        }
+
+        .live-stage .scene-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(300px, .7fr);
+            gap: 9vw;
+            align-items: center
+        }
+
+        .live-timeline {
+            position: relative;
+            padding-left: 22px
+        }
+
+        .live-timeline:before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 6px;
+            bottom: 6px;
+            width: 1px;
+            background: var(--line)
+        }
+
+        .live-event {
+            position: relative;
+            padding: 0 0 27px
+        }
+
+        .live-event:last-child {
+            padding-bottom: 0
+        }
+
+        .live-event:before {
+            content: "";
+            position: absolute;
+            left: -21px;
+            top: 5px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--signal);
+            box-shadow: 0 0 0 4px rgba(239, 108, 47, .07);
+        }
+
+        .live-event span {
+            font: 500 8px var(--mono);
+            letter-spacing: .09em;
+            color: var(--faint)
+        }
+
+        .live-event strong {
+            display: block;
+            margin-top: 5px;
+            font: 600 13px var(--display)
+        }
+
+        .live-event p {
+            margin: 6px 0 0;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #92958f
+        }
+
+        .live-status {
+            border-left: 1px solid var(--line);
+            padding-left: 18px
+        }
+
+        .live-status h3 {
+            margin: 0;
+            font: 600 11px var(--mono);
+            letter-spacing: .12em
+        }
+
+        .live-status p {
+            font-size: 12px;
+            line-height: 1.55;
+            color: #969994;
+            margin: 10px 0 0
+        }
+
+        .live-status .status-value {
+            margin-top: 20px;
+            font: 600 clamp(34px, 4vw, 62px)/.9 var(--display);
+            color: var(--positive);
+            letter-spacing: -.05em
+        }
+
+        .trustpath-stage .scene-inner {
+            width: var(--content)
+        }
+
+        .trustpath-copy {
+            max-width: 670px;
+            position: relative;
+            z-index: 5
+        }
+
+        .trustpath-caption {
+            margin-top: 30px;
+            border-left: 1px solid var(--signal);
+            padding-left: 14px;
+            max-width: 430px;
+            font: 500 10px/1.55 var(--mono);
+            color: #a3a59f;
+        }
+
+        .trustpath-legend {
+            position: absolute;
+            left: 7vw;
+            bottom: 11vh;
+            z-index: 5;
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: #676b65
+        }
+
+        .legend-item b {
+            font-weight: 500;
+            color: #aeb0aa
+        }
+
+        .trustpath-hint {
+            position: absolute;
+            right: 7vw;
+            top: 17vh;
+            z-index: 5;
+            text-align: right;
+            font: 500 7px/1.5 var(--mono);
+            letter-spacing: .08em;
+            color: #5e625d;
+        }
+
+        .trustpath-hint strong {
+            display: block;
+            color: #9ea19b;
+            font-weight: 500
+        }
+
+        .final-stage .scene-inner {
+            max-width: 1000px
+        }
+
+        .final-risk {
+            margin-top: 25px;
+            font: 700 clamp(82px, 11vw, 168px)/.82 var(--display);
+            letter-spacing: -.08em;
+            color: var(--critical);
+        }
+
+        .final-sub {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            margin-top: 26px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            max-width: 900px;
+        }
+
+        .final-sub>div {
+            padding: 14px;
+            background: rgba(10, 11, 13, .72)
+        }
+
+        .final-sub span {
+            display: block;
+            font: 500 8px var(--mono);
+            letter-spacing: .09em;
+            color: var(--faint)
+        }
+
+        .final-sub strong {
+            display: block;
+            margin-top: 7px;
+            font: 600 13px var(--display)
+        }
+
+        .final-recommendation {
+            margin-top: 22px;
+            padding: 15px 0;
+            border-top: 1px solid var(--line);
+            max-width: 900px;
+            font-size: 13px;
+            line-height: 1.55;
+            color: #b1b4ae;
+        }
+
+        .modal-root {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: none;
+            place-items: center;
+            background: rgba(4, 5, 6, .78);
+            backdrop-filter: blur(11px)
+        }
+
+        .modal-root[data-open="true"] {
+            display: grid
+        }
+
+        .modal {
+            width: min(620px, calc(100vw - 32px));
+            background: #101216;
+            border: 1px solid var(--line-strong);
+            box-shadow: 0 30px 100px rgba(0, 0, 0, .52);
+        }
+
+        .modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .modal-head h2 {
+            margin: 0;
+            font: 600 13px var(--display)
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--line);
+            background: transparent;
+            cursor: pointer
+        }
+
+        .modal-body {
+            padding: 18px
+        }
+
+        .modal-body p {
+            margin: 0 0 18px;
+            font-size: 13px;
+            line-height: 1.58;
+            color: #b2b5af
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line)
+        }
+
+        .modal-grid div {
+            background: #0d0f12;
+            padding: 12px
+        }
+
+        .modal-grid span {
+            display: block;
+            font: 500 8px var(--mono);
+            color: var(--faint);
+            letter-spacing: .09em
+        }
+
+        .modal-grid strong {
+            display: block;
+            margin-top: 5px;
+            font: 600 11px var(--mono)
+        }
+
+        .modal-foot {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding: 14px 18px;
+            border-top: 1px solid var(--line)
+        }
+
+        .toast {
+            position: fixed;
+            left: 24px;
+            bottom: 24px;
+            z-index: 210;
+            max-width: min(420px, calc(100vw - 48px));
+            padding: 12px 14px;
+            border: 1px solid var(--line-strong);
+            background: #111418;
+            color: #d7d8d2;
+            opacity: 0;
+            transform: translateY(9px);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            animation: toast-in .35s var(--ease-out) forwards
+        }
+
+        @keyframes toast-in {
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .reduced-motion {
+            display: none
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .reduced-motion {
+                display: block
+            }
+
+            .instrument-beam,
+            .instrument-ring {
+                animation: none !important
+            }
+
+            .btn,
+            .primary-nav a:after,
+            .story-copy,
+            .lui-meter span {
+                transition: none !important
+            }
+        }
+
+        @media (max-width:1080px) {
+            :root {
+                --content: min(100% - 64px, 1200px);
+                --lui-width: 300px
+            }
+
+            .topbar {
+                left: 16px;
+                right: 16px
+            }
+
+            .primary-nav {
+                gap: 15px
+            }
+
+            .hero-copy {
+                width: min(92vw, 920px)
+            }
+
+            .hero-instrument {
+                right: 2vw;
+                width: 41vw;
+                opacity: .46
+            }
+
+            .hero-aside {
+                display: none
+            }
+
+            .text-stage .scene-inner,
+            .visual-stage .scene-inner,
+            .acoustic-stage .scene-inner,
+            .biometric-stage .scene-inner,
+            .live-stage .scene-inner {
+                grid-template-columns: 1fr;
+                gap: 30px
+            }
+
+            .context-column,
+            .live-status {
+                display: none
+            }
+
+            .visual-stack {
+                width: min(64vw, 500px);
+                justify-self: end
+            }
+
+            .wavefield {
+                right: 0;
+                width: 54vw;
+                opacity: .28
+            }
+        }
+
+        @media (max-width:720px) {
+            :root {
+                --content: calc(100vw - 32px)
+            }
+
+            .topbar {
+                height: 58px;
+                padding: 0 12px
+            }
+
+            .primary-nav {
+                display: none
+            }
+
+            .brand-logo {
+                width: 34px;
+                height: 34px
+            }
+
+            .brand-name {
+                font-size: 12px;
+                letter-spacing: .11em
+            }
+
+            .scene--hero {
+                min-height: 230vh
+            }
+
+            .scene--tall {
+                min-height: 160vh
+            }
+
+            .hero-copy {
+                width: 100%
+            }
+
+            .display {
+                font-size: clamp(48px, 14vw, 80px)
+            }
+
+            .hero-title .line {
+                white-space: normal
+            }
+
+            .lede {
+                font-size: 15px
+            }
+
+            .hero-instrument {
+                right: -25vw;
+                top: 25vh;
+                width: 90vw;
+                opacity: .22
+            }
+
+            .lui {
+                left: 16px;
+                right: 16px;
+                bottom: 16px;
+                width: auto
+            }
+
+            .story-progress {
+                bottom: 190px
+            }
+
+            .visual-stack {
+                width: 90vw;
+                height: 46vh
+            }
+
+            .sheet {
+                width: 82%;
+                height: 76%
+            }
+
+            .final-sub {
+                grid-template-columns: 1fr
+            }
+
+            .final-risk {
+                font-size: clamp(70px, 20vw, 120px)
+            }
+
+            .page-note {
+                display: none
+            }
+        }
+
+        .module-layout {
+            width: min(1280px, 100%);
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(350px, .72fr);
+            gap: clamp(50px, 8vw, 130px);
+            align-items: center;
+        }
+
+        .module-layout--light {
+            align-items: center
+        }
+
+        .module-layout .copy {
+            min-width: 0
+        }
+
+        .module-layout .display {
+            max-width: 780px
+        }
+
+        .module-layout .lede {
+            max-width: 650px
+        }
+
+        .text-evidence,
+        .acoustic-visual,
+        .identity-visual,
+        .live-monitor {
+            width: 100%;
+            max-width: 480px;
+            justify-self: end;
+        }
+
+        .text-evidence {
+            padding: 20px 0 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .evidence-kicker,
+        .signal-panel-head span,
+        .identity-head span,
+        .live-monitor-head span,
+        .paper-caption span {
+            font: 500 8px var(--mono);
+            letter-spacing: .12em;
+            color: var(--faint);
+        }
+
+        .text-evidence-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .text-evidence-head strong {
+            font: 600 11px var(--display);
+            letter-spacing: .04em
+        }
+
+        .text-evidence-head span {
+            font: 500 8px var(--mono);
+            color: var(--signal);
+            letter-spacing: .08em
+        }
+
+        .claim-list {
+            display: flex;
+            flex-direction: column
+        }
+
+        .claim-row {
+            display: grid;
+            grid-template-columns: 30px 1fr;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(242, 240, 235, .07);
+        }
+
+        .claim-row:last-child {
+            border-bottom: 0
+        }
+
+        .claim-index {
+            font: 500 8px var(--mono);
+            color: var(--faint);
+            padding-top: 2px
+        }
+
+        .claim-row b {
+            font: 600 10px var(--mono);
+            letter-spacing: .08em
+        }
+
+        .claim-row small {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+            line-height: 1.45;
+            color: var(--muted)
+        }
+
+        .claim-row--active {
+            background: linear-gradient(90deg, rgba(239, 108, 47, .07), transparent);
+            padding-left: 10px
+        }
+
+        .claim-row--active .claim-index {
+            color: var(--signal)
+        }
+
+        .evidence-foot {
+            display: flex;
+            gap: 24px;
+            padding: 13px 0;
+            font: 500 8px var(--mono);
+            color: var(--faint);
+            letter-spacing: .08em
+        }
+
+        .evidence-foot b {
+            color: #f0eee8;
+            font-weight: 500;
+            margin-left: 5px
+        }
+
+        .paper-inspection {
+            justify-self: end;
+            width: min(100%, 530px)
+        }
+
+        .paper-stack {
+            position: relative;
+            width: 100%;
+            height: 520px;
+        }
+
+        .paper {
+            position: absolute;
+            width: 83%;
+            height: 82%;
+            right: 0;
+            padding: 20px;
+            background: #f5f3ed;
+            border: 1px solid #cecac0;
+            color: #171816;
+            box-shadow: 0 18px 42px rgba(0, 0, 0, .09);
+            transform-origin: center;
+        }
+
+        .paper--back {
+            top: 2%;
+            right: 13%;
+            transform: rotate(-4deg);
+            opacity: .72
+        }
+
+        .paper--middle {
+            top: 10%;
+            right: 6%;
+            transform: rotate(2.4deg);
+            opacity: .88
+        }
+
+        .paper--front {
+            top: 18%;
+            right: 0;
+            transform: rotate(-.7deg);
+            z-index: 3
+        }
+
+        .paper-meta {
+            font: 500 8px var(--mono);
+            letter-spacing: .10em;
+            color: #858981
+        }
+
+        .paper-title {
+            margin-top: 7px;
+            font: 600 14px var(--display);
+            letter-spacing: -.02em
+        }
+
+        .paper-rule {
+            height: 1px;
+            background: #d2cfc7;
+            margin: 14px 0
+        }
+
+        .paper-copy {
+            font-size: 12px;
+            line-height: 1.55;
+            color: #5c605a;
+            max-width: 300px
+        }
+
+        .paper-image {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            top: 46%;
+            bottom: 52px;
+            border: 1px solid #d0cdc5;
+            background:
+                linear-gradient(135deg, rgba(239, 108, 47, .12), transparent 50%),
+                repeating-linear-gradient(90deg, rgba(23, 24, 22, .07) 0 1px, transparent 1px 10px),
+                #e7e5de;
+        }
+
+        .paper-highlight {
+            display: inline-block;
+            margin-top: 17px;
+            padding: 6px 8px;
+            border: 1px solid #cac6bd;
+            font: 600 8px var(--mono);
+            letter-spacing: .08em;
+            background: #eceae3;
+        }
+
+        .paper-highlight--dark {
+            background: #181a19;
+            color: #f0eee8;
+            border-color: #181a19
+        }
+
+        .paper-foot {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #d2cfc7;
+            padding-top: 8px;
+            font: 500 7px var(--mono);
+            letter-spacing: .09em;
+            color: #858981
+        }
+
+        .paper-foot b {
+            font-weight: 500;
+            color: #171816
+        }
+
+        .paper-caption {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: -4px;
+            padding-left: 8px;
+            font: 500 8px var(--mono);
+            letter-spacing: .07em;
+            color: #747870
+        }
+
+        .paper-caption b {
+            font-weight: 500;
+            color: #353833
+        }
+
+        .acoustic-visual {
+            border: 1px solid var(--line);
+            padding: 16px;
+            background: rgba(255, 255, 255, .018);
+        }
+
+        .signal-panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .signal-panel-head b {
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--info)
+        }
+
+        .wave-grid {
+            height: 270px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 4px
+        }
+
+        .wave-grid:before,
+        .wave-grid:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(242, 240, 235, .06)
+        }
+
+        .wave-grid:before {
+            top: 32%
+        }
+
+        .wave-grid:after {
+            top: 68%
+        }
+
+        .wave {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            transform-origin: center;
+            background: linear-gradient(90deg, transparent, rgba(121, 197, 207, .62), transparent);
+        }
+
+        .wave:after {
+            content: "";
+            position: absolute;
+            inset: -18px 0;
+            background: repeating-linear-gradient(90deg, transparent 0 9px, rgba(121, 197, 207, .055) 9px 10px);
+            opacity: .55
+        }
+
+        .wave-a {
+            transform: translateY(-26px) scaleX(.74) rotate(-7deg)
+        }
+
+        .wave-b {
+            transform: translateY(-12px) scaleX(.91) rotate(-3deg)
+        }
+
+        .wave-c {
+            transform: translateY(0) scaleX(1) rotate(2deg)
+        }
+
+        .wave-d {
+            transform: translateY(12px) scaleX(.93) rotate(4deg)
+        }
+
+        .wave-e {
+            transform: translateY(24px) scaleX(.72) rotate(8deg)
+        }
+
+        .wave-f {
+            transform: translateY(0) scaleX(.54) rotate(-18deg);
+            opacity: .55
+        }
+
+        .signal-axis {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+            font: 500 7px var(--mono);
+            color: var(--faint);
+            letter-spacing: .08em
+        }
+
+        .identity-visual {
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            padding-top: 14px
+        }
+
+        .identity-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 11px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .identity-head b {
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--critical)
+        }
+
+        .voice-track {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 14px;
+            align-items: center;
+            padding: 22px 0
+        }
+
+        .voice-block span {
+            display: block;
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--faint)
+        }
+
+        .voice-block strong {
+            display: block;
+            margin-top: 5px;
+            font: 600 11px var(--display)
+        }
+
+        .voice-wave {
+            height: 70px;
+            margin-top: 13px;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line)
+        }
+
+        .voice-wave:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(90deg, transparent 0 8px, rgba(242, 240, 235, .08) 8px 9px),
+                linear-gradient(90deg, transparent, rgba(126, 180, 139, .18), transparent);
+        }
+
+        .voice-wave:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: currentColor;
+            opacity: .75;
+            box-shadow: 0 -10px 0 -9px currentColor, 0 10px 0 -9px currentColor, 0 -20px 0 -19px currentColor, 0 20px 0 -19px currentColor;
+        }
+
+        .voice-wave--reference {
+            color: var(--positive)
+        }
+
+        .voice-wave--test {
+            color: var(--critical)
+        }
+
+        .identity-divider {
+            font: 600 9px var(--mono);
+            color: var(--faint)
+        }
+
+        .identity-result {
+            padding: 13px 0 18px;
+            border-top: 1px solid var(--line)
+        }
+
+        .identity-result span {
+            display: block;
+            font: 500 8px var(--mono);
+            color: var(--faint);
+            letter-spacing: .09em
+        }
+
+        .identity-result strong {
+            display: block;
+            margin-top: 6px;
+            font: 600 18px var(--display);
+            color: var(--critical)
+        }
+
+        .identity-result small {
+            display: block;
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.45
+        }
+
+        .live-monitor {
+            border: 1px solid var(--line);
+            padding: 16px;
+            background: rgba(255, 255, 255, .015)
+        }
+
+        .live-monitor-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .live-monitor-head b {
+            font: 500 8px var(--mono);
+            color: var(--positive);
+            letter-spacing: .09em
+        }
+
+        .live-monitor-line {
+            display: grid;
+            grid-template-columns: 8px 52px 1fr;
+            gap: 11px;
+            align-items: center;
+            min-height: 62px;
+            border-bottom: 1px solid rgba(242, 240, 235, .07)
+        }
+
+        .live-monitor-line i {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--signal);
+            box-shadow: 0 0 0 4px rgba(239, 108, 47, .06)
+        }
+
+        .live-monitor-line span {
+            font: 500 8px var(--mono);
+            color: var(--faint);
+            letter-spacing: .07em
+        }
+
+        .live-monitor-line strong {
+            font: 600 11px var(--display)
+        }
+
+        .live-meter {
+            height: 2px;
+            background: rgba(255, 255, 255, .06);
+            margin-top: 14px;
+            overflow: hidden
+        }
+
+        .live-meter span {
+            display: block;
+            width: 62%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--signal), var(--signal-2));
+            animation: livePulse 2.4s ease-in-out infinite
+        }
+
+        .live-monitor-foot {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            font: 500 7px var(--mono);
+            color: var(--faint);
+            letter-spacing: .08em
+        }
+
+        @keyframes livePulse {
+
+            0%,
+            100% {
+                opacity: .45;
+                transform: scaleX(.65);
+                transform-origin: left
+            }
+
+            50% {
+                opacity: 1;
+                transform: scaleX(1)
+            }
+        }
+
+        .lui {
+            width: 290px
+        }
+
+        .story-progress {
+            left: 0
+        }
+
+        .scene .story-progress {
+            bottom: 7vh
+        }
+
+        .hero .story-progress {
+            bottom: 7vh
+        }
+
+        .page-note {
+            display: none
+        }
+
+        @media (max-width:1080px) {
+            .module-layout {
+                grid-template-columns: 1fr;
+                gap: 38px;
+            }
+
+            .text-evidence,
+            .acoustic-visual,
+            .identity-visual,
+            .live-monitor,
+            .paper-inspection {
+                justify-self: start;
+                max-width: 640px
+            }
+
+            .paper-stack {
+                height: 500px
+            }
+        }
+
+        @media (max-width:720px) {
+            .module-layout {
+                gap: 28px
+            }
+
+            .paper-stack {
+                height: 410px
+            }
+
+            .paper {
+                width: 86%;
+                height: 80%
+            }
+
+            .text-evidence,
+            .acoustic-visual,
+            .identity-visual,
+            .live-monitor,
+            .paper-inspection {
+                max-width: none
+            }
+
+            .voice-track {
+                grid-template-columns: 1fr
+            }
+
+            .identity-divider {
+                display: none
+            }
+
+            .lui {
+                width: auto
+            }
+
+            .story-progress {
+                display: none
+            }
+        }
+
+        .side-rail,
+        .scene-index,
+        .signal-sequence,
+        .signal-readout,
+        .scroll-cue,
+        .hero-symbol,
+        .section-marker,
+        .module-strip,
+        .module,
+        .evidence-card-stack,
+        .wavefield,
+        .right-note {
+            display: none !important
+        }
+
+        :root {
+            --content: min(1680px, calc(100vw - 96px));
+            --module-gap: clamp(70px, 9vw, 170px);
+        }
+
+        .scene-inner {
+            width: var(--content);
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .module-layout {
+            width: 100%;
+            grid-template-columns: minmax(0, .92fr) minmax(470px, .78fr);
+            gap: var(--module-gap);
+            align-items: center;
+        }
+
+        .module-layout .copy {
+            max-width: 720px;
+            padding-right: 1vw;
+        }
+
+        .module-layout .display {
+            max-width: 760px;
+        }
+
+        .module-layout .lede {
+            max-width: 650px;
+        }
+
+        .module-layout> :nth-child(2) {
+            justify-self: end;
+            width: min(100%, 620px);
+        }
+
+        .lui {
+            width: 286px;
+            right: 22px;
+            bottom: 22px;
+        }
+
+        .text-evidence {
+            width: min(100%, 610px);
+            min-height: 350px;
+            padding: 23px 0 0;
+            transform: none;
+        }
+
+        .text-evidence-head {
+            padding: 15px 0 14px;
+        }
+
+        .claim-row {
+            min-height: 76px;
+            padding: 17px 0;
+        }
+
+        .claim-row--active {
+            padding-left: 14px;
+        }
+
+        .claim-row small {
+            max-width: 380px;
+        }
+
+        .evidence-foot {
+            padding-top: 16px;
+        }
+
+        .signal-quote {
+            max-width: 640px;
+            font-size: 13px;
+            line-height: 1.62;
+            margin-top: 36px;
+        }
+
+        .visual-stage .scene-inner {
+            width: min(1680px, calc(100vw - 96px));
+        }
+
+        .visual-stage .module-layout--light {
+            grid-template-columns: minmax(0, .86fr) minmax(540px, .94fr);
+            gap: clamp(50px, 7vw, 135px);
+        }
+
+        .paper-inspection {
+            width: min(100%, 650px);
+            justify-self: end;
+            transform: none;
+        }
+
+        .paper-stack {
+            height: 600px;
+            width: 100%;
+        }
+
+        .paper {
+            width: 76%;
+            height: 78%;
+            padding: 23px;
+        }
+
+        .paper--back {
+            top: 2%;
+            right: 20%;
+            transform: rotate(-4.5deg);
+        }
+
+        .paper--middle {
+            top: 10%;
+            right: 9%;
+            transform: rotate(2.7deg);
+        }
+
+        .paper--front {
+            top: 19%;
+            right: 0;
+            transform: rotate(-.6deg);
+        }
+
+        .paper-image {
+            left: 23px;
+            right: 23px;
+            top: 44%;
+            bottom: 56px;
+        }
+
+        .paper-caption {
+            padding-left: 0;
+            margin-top: 2px;
+        }
+
+        .acoustic-visual {
+            width: min(100%, 640px);
+            max-width: none;
+            justify-self: end;
+            transform: none;
+            padding: 18px;
+        }
+
+        .wave-grid {
+            height: 330px;
+        }
+
+        .identity-visual {
+            width: min(100%, 650px);
+            max-width: none;
+            justify-self: end;
+            transform: none;
+            padding-top: 16px;
+        }
+
+        .voice-track {
+            gap: 20px;
+            padding: 28px 0;
+        }
+
+        .voice-wave {
+            height: 84px;
+        }
+
+        .identity-result {
+            padding-top: 16px;
+            padding-bottom: 21px;
+        }
+
+        .live-monitor {
+            width: min(100%, 650px);
+            max-width: none;
+            justify-self: end;
+            transform: none;
+            padding: 18px;
+        }
+
+        .live-monitor-line {
+            min-height: 72px;
+        }
+
+        .trustpath-stage .scene-inner {
+            width: min(1680px, calc(100vw - 96px));
+        }
+
+        .trustpath-copy {
+            max-width: 690px;
+        }
+
+        .trustpath-caption {
+            max-width: 470px;
+        }
+
+        .trustpath-legend {
+            left: 4vw;
+            bottom: 9vh;
+        }
+
+        .scene--tall .scene-stage {
+            align-items: center;
+        }
+
+        .text-stage .scene-inner,
+        .acoustic-stage .scene-inner,
+        .biometric-stage .scene-inner,
+        .live-stage .scene-inner {
+            transform: translateY(-1.5vh);
+        }
+
+        .visual-stage .scene-inner {
+            transform: translateY(-1vh);
+        }
+
+        @media (min-width:1200px) {
+            .module-layout> :nth-child(2) {
+                margin-right: clamp(18px, 1.2vw, 28px);
+            }
+
+            .visual-stage .module-layout> :nth-child(2) {
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width:1080px) {
+            :root {
+                --content: calc(100vw - 64px);
+                --module-gap: 42px;
+            }
+
+            .module-layout,
+            .visual-stage .module-layout--light {
+                grid-template-columns: 1fr;
+            }
+
+            .module-layout> :nth-child(2),
+            .paper-inspection,
+            .text-evidence,
+            .acoustic-visual,
+            .identity-visual,
+            .live-monitor {
+                justify-self: start;
+                transform: none;
+                width: min(100%, 700px);
+            }
+
+            .paper-stack {
+                height: 540px;
+            }
+        }
+
+        @media (max-width:720px) {
+            :root {
+                --content: calc(100vw - 32px)
+            }
+
+            .module-layout {
+                gap: 28px;
+            }
+
+            .module-layout .copy {
+                max-width: none;
+            }
+
+            .paper-stack {
+                height: 440px;
+            }
+
+            .paper {
+                width: 82%;
+            }
+
+            .lui {
+                left: 16px;
+                right: 16px;
+                width: auto;
+                bottom: 16px;
+            }
+        }
+
+        .side-rail,
+        .scene-index,
+        .signal-sequence,
+        .signal-readout,
+        .scroll-cue,
+        .hero-symbol,
+        .module-strip,
+        .wavefield {
+            display: none !important;
+        }
+
+        :root {
+            --content: min(1710px, calc(100vw - 84px));
+            --module-gap: clamp(80px, 10vw, 180px);
+        }
+
+        .module-layout {
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(430px, 36%) minmax(520px, 48%);
+            column-gap: var(--module-gap);
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-layout .copy {
+            width: 100%;
+            max-width: 720px;
+        }
+
+        .module-layout .display {
+            max-width: 720px;
+        }
+
+        .module-layout .lede {
+            max-width: 620px;
+        }
+
+        .module-layout> :nth-child(2) {
+            justify-self: end;
+            width: 100%;
+            max-width: none;
+            margin-left: auto;
+        }
+
+        .text-evidence {
+            width: 100%;
+            max-width: 720px;
+            min-height: 370px;
+            padding: 25px 0 0;
+            transform: none;
+        }
+
+        .text-evidence-head {
+            padding: 16px 0 15px;
+        }
+
+        .claim-row {
+            min-height: 84px;
+            padding: 19px 0;
+        }
+
+        .claim-row--active {
+            padding-left: 16px;
+        }
+
+        .visual-stage .module-layout--light {
+            width: 100%;
+            grid-template-columns: minmax(430px, 34%) minmax(600px, 52%);
+            column-gap: clamp(72px, 9vw, 150px);
+            justify-content: space-between;
+        }
+
+        .paper-inspection {
+            width: 100%;
+            max-width: 720px;
+            justify-self: end;
+            margin-left: auto;
+            transform: none;
+        }
+
+        .paper-stack {
+            height: 620px;
+            width: 100%;
+        }
+
+        .paper {
+            width: 72%;
+            height: 79%;
+            padding: 24px;
+        }
+
+        .paper--back {
+            top: 1%;
+            right: 25%;
+            transform: rotate(-4deg);
+        }
+
+        .paper--middle {
+            top: 9%;
+            right: 12%;
+            transform: rotate(2.2deg);
+        }
+
+        .paper--front {
+            top: 18%;
+            right: 0;
+            transform: rotate(-.55deg);
+            box-shadow: 24px 28px 60px rgba(0, 0, 0, .13);
+        }
+
+        .paper-caption {
+            width: 72%;
+            margin-left: auto;
+            padding-left: 0;
+        }
+
+        .acoustic-visual {
+            width: 100%;
+            max-width: 720px;
+            justify-self: end;
+            margin-left: auto;
+            transform: none;
+        }
+
+        .wave-grid {
+            height: 350px;
+        }
+
+        .identity-visual {
+            width: 100%;
+            max-width: 720px;
+            justify-self: end;
+            margin-left: auto;
+            transform: none;
+        }
+
+        .identity-head {
+            padding-bottom: 13px;
+        }
+
+        .voice-track {
+            gap: 25px;
+            padding: 30px 0;
+        }
+
+        .voice-wave {
+            height: 90px;
+        }
+
+        .live-monitor {
+            width: 100%;
+            max-width: 720px;
+            justify-self: end;
+            margin-left: auto;
+            transform: none;
+        }
+
+        .live-monitor-line {
+            min-height: 78px;
+        }
+
+        .trustpath-copy {
+            max-width: 720px;
+        }
+
+        .lui {
+            right: 18px;
+            bottom: 18px;
+        }
+
+        @media (min-width:1400px) {
+            .module-layout {
+                padding-right: 2vw;
+            }
+
+            .module-layout .copy {
+                padding-left: 1vw;
+            }
+        }
+
+        @media (max-width:1080px) {
+
+            .module-layout,
+            .visual-stage .module-layout--light {
+                grid-template-columns: 1fr;
+                row-gap: 40px;
+                justify-content: start;
+            }
+
+            .module-layout> :nth-child(2),
+            .paper-inspection,
+            .text-evidence,
+            .acoustic-visual,
+            .identity-visual,
+            .live-monitor {
+                justify-self: start;
+                margin-left: 0;
+                width: min(100%, 760px);
+            }
+
+            .paper-stack {
+                height: 540px;
+            }
+        }
+
+        @media (max-width:720px) {
+
+            .module-layout,
+            .visual-stage .module-layout--light {
+                grid-template-columns: 1fr;
+                row-gap: 28px;
+            }
+
+            .paper-stack {
+                height: 430px;
+            }
+
+            .paper {
+                width: 84%;
+            }
+
+            .paper-caption {
+                width: 84%;
+            }
+        }
+
+        .trustpath-stage .scene-shell.trustpath-shell {
+            position: absolute;
+            inset: 0;
+            width: 64%;
+            left: auto;
+            right: 0;
+            z-index: 1;
+            overflow: hidden;
+            opacity: 1;
+        }
+
+        #trustCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .trustpath-shell:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(9, 10, 12, .96) 0%, rgba(9, 10, 12, .48) 12%, transparent 34%),
+                radial-gradient(circle at 58% 50%, transparent 24%, rgba(9, 10, 12, .07) 52%, rgba(9, 10, 12, .45) 100%);
+        }
+
+        .trustpath-field-ui {
+            position: absolute;
+            right: 7vw;
+            top: 24vh;
+            width: min(31vw, 450px);
+            min-width: 330px;
+            padding: 14px 0 0;
+            border-top: 1px solid rgba(242, 240, 235, .10);
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .trustpath-field-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(242, 240, 235, .08);
+        }
+
+        .trustpath-field-head span {
+            font: 500 8px var(--mono);
+            letter-spacing: .13em;
+            color: var(--faint);
+        }
+
+        .trustpath-field-head b {
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--info);
+        }
+
+        .trustpath-field-copy {
+            padding: 10px 0 13px;
+            font: 500 10px/1.45 var(--mono);
+            color: #92958f;
+        }
+
+        .trustpath-relationships {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-bottom: 1px solid rgba(242, 240, 235, .08);
+        }
+
+        .trustpath-rel {
+            display: grid;
+            grid-template-columns: 8px 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 11px 0;
+            border-top: 1px solid rgba(242, 240, 235, .06);
+            opacity: .42;
+            transform: translateX(12px);
+            transition: opacity .55s var(--ease), transform .65s var(--ease);
+        }
+
+        .trustpath-rel.is-active {
+            opacity: 1;
+            transform: none;
+        }
+
+        .trustpath-rel-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--signal);
+            box-shadow: 0 0 0 4px rgba(239, 108, 47, .06);
+        }
+
+        .trustpath-rel.is-neutral .trustpath-rel-dot {
+            background: var(--info)
+        }
+
+        .trustpath-rel-title {
+            font: 600 9px var(--mono);
+            letter-spacing: .07em;
+            color: #deded8;
+        }
+
+        .trustpath-rel-meta {
+            margin-top: 4px;
+            font: 500 7px var(--mono);
+            letter-spacing: .08em;
+            color: var(--faint);
+        }
+
+        .trustpath-rel-score {
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: #aeb0aa;
+        }
+
+        .trustpath-node-label {
+            position: absolute;
+            z-index: 5;
+            padding: 6px 8px;
+            border-left: 1px solid rgba(239, 108, 47, .6);
+            background: rgba(9, 10, 12, .58);
+            backdrop-filter: blur(8px);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .6s var(--ease), transform .6s var(--ease);
+            transform: translateY(8px);
+        }
+
+        .trustpath-node-label.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .trustpath-node-label span {
+            display: block;
+            font: 500 7px var(--mono);
+            letter-spacing: .11em;
+            color: var(--faint);
+        }
+
+        .trustpath-node-label strong {
+            display: block;
+            margin-top: 3px;
+            font: 600 11px var(--display);
+            color: #eee;
+        }
+
+        @media (max-width:1080px) {
+            .trustpath-stage .scene-shell.trustpath-shell {
+                width: 100%;
+                opacity: .72
+            }
+
+            .trustpath-field-ui {
+                right: 6vw;
+                width: min(48vw, 420px);
+            }
+        }
+
+        @media (max-width:720px) {
+            .trustpath-stage .scene-shell.trustpath-shell {
+                width: 100%;
+                opacity: .56
+            }
+
+            .trustpath-field-ui {
+                left: 6vw;
+                right: 6vw;
+                width: auto;
+                min-width: 0;
+                top: auto;
+                bottom: 24vh;
+            }
+        }
+
+        .voice-comparison {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
+            gap: 14px;
+            align-items: stretch;
+            padding: 22px 0 20px;
+        }
+
+        .voice-channel {
+            min-width: 0;
+        }
+
+        .voice-channel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+            padding-bottom: 9px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .voice-channel-head span {
+            font: 600 9px var(--mono);
+            letter-spacing: .08em;
+        }
+
+        .voice-channel-head small {
+            font: 500 7px var(--mono);
+            color: var(--faint);
+            letter-spacing: .07em;
+        }
+
+        .soundwave {
+            height: 132px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 16px 6px;
+            border-bottom: 1px solid var(--line);
+            border-left: 1px solid rgba(242, 240, 235, .04);
+            border-right: 1px solid rgba(242, 240, 235, .04);
+            background:
+                linear-gradient(180deg, transparent 49.5%, rgba(242, 240, 235, .07) 50%, transparent 50.5%),
+                repeating-linear-gradient(90deg,
+                    transparent 0 13px,
+                    rgba(242, 240, 235, .025) 13px 14px);
+            overflow: hidden;
+        }
+
+        .soundwave i {
+            display: block;
+            width: 4px;
+            height: var(--h);
+            min-height: 10px;
+            border-radius: 999px;
+            transform-origin: center;
+            opacity: .78;
+            background: currentColor;
+            box-shadow: 0 0 12px currentColor;
+        }
+
+        .voice-channel--reference .soundwave {
+            color: var(--positive)
+        }
+
+        .voice-channel--test .soundwave {
+            color: var(--critical)
+        }
+
+        .voice-channel--reference .soundwave i:nth-child(3n),
+        .voice-channel--test .soundwave i:nth-child(4n) {
+            opacity: .52;
+        }
+
+        .voice-channel--reference .soundwave i:nth-child(4n+1),
+        .voice-channel--test .soundwave i:nth-child(5n+1) {
+            animation: voicePulse 2.8s ease-in-out infinite;
+        }
+
+        .voice-channel--test .soundwave i:nth-child(5n+2) {
+            animation: voicePulseAlt 3.2s ease-in-out infinite;
+        }
+
+        .voice-bridge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid var(--line);
+            border-right: 1px solid var(--line);
+        }
+
+        .voice-bridge span {
+            font: 600 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--faint);
+        }
+
+        @keyframes voicePulse {
+
+            0%,
+            100% {
+                transform: scaleY(.78);
+                opacity: .55
+            }
+
+            50% {
+                transform: scaleY(1.12);
+                opacity: .95
+            }
+        }
+
+        @keyframes voicePulseAlt {
+
+            0%,
+            100% {
+                transform: scaleY(.9);
+                opacity: .52
+            }
+
+            50% {
+                transform: scaleY(.72);
+                opacity: .9
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .soundwave i {
+                animation: none !important
+            }
+        }
+
+        @media (max-width:720px) {
+            .voice-comparison {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .voice-bridge {
+                min-height: 24px;
+                border-top: 1px solid var(--line);
+                border-bottom: 1px solid var(--line);
+                border-left: 0;
+                border-right: 0;
+            }
+        }
+
+        .identity-visual {
+            width: min(100%, 760px);
+            max-width: none;
+        }
+
+        .voice-comparison {
+            grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr);
+            align-items: stretch;
+            gap: 18px;
+        }
+
+        .voice-channel-head span {
+            font-size: 9px;
+            letter-spacing: .10em;
+        }
+
+        .voice-channel-head small {
+            font-size: 7px;
+            white-space: nowrap;
+        }
+
+        .soundwave {
+            height: 148px;
+            border-left: 0;
+            border-right: 0;
+            background:
+                linear-gradient(180deg, transparent 49.5%, rgba(242, 240, 235, .065) 50%, transparent 50.5%),
+                repeating-linear-gradient(90deg,
+                    transparent 0 12px,
+                    rgba(242, 240, 235, .028) 12px 13px);
+        }
+
+        .soundwave i {
+            width: 5px;
+        }
+
+        .voice-bridge {
+            min-height: 148px;
+        }
+
+        .voice-bridge span {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #bfc1bb;
+            background: rgba(255, 255, 255, .02);
+        }
+
+        .identity-result strong {
+            letter-spacing: .01em;
+        }
+
+        .trustpath-stage .trustpath-shell {
+            position: absolute;
+            inset: 0;
+            left: auto;
+            right: 0;
+            width: 66%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        #trustCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .trust-flow-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            padding: 15vh 7vw 9vh 4vw;
+        }
+
+        .trust-flow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(242, 240, 235, .10);
+        }
+
+        .trust-flow-header span,
+        .trust-col-label {
+            font: 500 8px var(--mono);
+            letter-spacing: .13em;
+            color: var(--faint);
+        }
+
+        .trust-flow-header b {
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--info);
+        }
+
+        .trust-flow-stage {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.02fr .88fr .78fr;
+            gap: clamp(22px, 3.5vw, 58px);
+            min-height: 54vh;
+            padding-top: 20px;
+        }
+
+        .trust-flow-col {
+            position: relative
+        }
+
+        .trust-col-label {
+            display: block;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(242, 240, 235, .06)
+        }
+
+        .trust-source {
+            width: min(150px, 100%);
+            margin-top: 24px;
+            padding: 11px 12px 10px;
+            border: 1px solid rgba(242, 240, 235, .11);
+            background: rgba(9, 10, 12, .48);
+            opacity: .38;
+            transform: translateX(-10px);
+            transition: opacity .55s var(--ease), transform .55s var(--ease), border-color .55s var(--ease);
+        }
+
+        .trust-source.is-active {
+            opacity: 1;
+            transform: none;
+            border-color: rgba(242, 240, 235, .23)
+        }
+
+        .trust-source b {
+            display: block;
+            font: 600 10px var(--display)
+        }
+
+        .trust-source small {
+            display: block;
+            margin-top: 4px;
+            font: 500 7px var(--mono);
+            color: var(--faint)
+        }
+
+        .trust-link {
+            margin-top: 58px;
+            min-height: 38px;
+            padding: 11px 12px;
+            border-left: 1px solid rgba(121, 197, 207, .40);
+            background: linear-gradient(90deg, rgba(121, 197, 207, .055), transparent);
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: #848882;
+            opacity: .25;
+            transform: translateX(10px);
+            transition: opacity .6s var(--ease), transform .6s var(--ease), color .6s var(--ease);
+        }
+
+        .trust-link:nth-child(2) {
+            margin-top: 76px
+        }
+
+        .trust-link:nth-child(3) {
+            margin-top: 64px
+        }
+
+        .trust-link.is-active {
+            opacity: 1;
+            transform: none;
+            color: #e0e0db
+        }
+
+        .trust-link b {
+            float: right;
+            font-weight: 500;
+            color: #999c96
+        }
+
+        .trust-case-node {
+            width: min(190px, 100%);
+            aspect-ratio: 1.18;
+            margin: 125px auto 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(239, 108, 47, .34);
+            background: radial-gradient(circle, rgba(239, 108, 47, .09), transparent 62%), rgba(9, 10, 12, .62);
+            opacity: .30;
+            transform: scale(.90);
+            transition: opacity .7s var(--ease), transform .7s var(--ease), box-shadow .7s var(--ease), border-color .7s var(--ease);
+        }
+
+        .trust-case-node.is-forming {
+            opacity: .72;
+            transform: scale(1);
+            box-shadow: 0 0 70px rgba(239, 108, 47, .12)
+        }
+
+        .trust-case-node.is-resolved {
+            opacity: 1;
+            border-color: rgba(239, 108, 47, .65);
+            box-shadow: 0 0 100px rgba(239, 108, 47, .15)
+        }
+
+        .trust-case-node span {
+            font: 600 14px var(--display);
+            letter-spacing: .10em
+        }
+
+        .trust-case-node strong {
+            margin-top: 7px;
+            font: 500 8px var(--mono);
+            color: #a8aaa4;
+            letter-spacing: .08em
+        }
+
+        .trust-case-node small {
+            margin-top: 12px;
+            font: 500 7px var(--mono);
+            color: var(--signal);
+            letter-spacing: .10em
+        }
+
+        .trust-flow-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            padding-top: 11px;
+            border-top: 1px solid rgba(242, 240, 235, .08);
+            font: 500 7px var(--mono);
+            letter-spacing: .08em;
+            color: #5e625c;
+        }
+
+        .trust-flow-footer span:first-child {
+            color: #9da099
+        }
+
+        @media(max-width:1080px) {
+            .trustpath-stage .trustpath-shell {
+                width: 100%;
+                opacity: .78
+            }
+
+            .trust-flow-overlay {
+                padding: 16vh 6vw 8vh 46vw
+            }
+        }
+
+        @media(max-width:720px) {
+            .trustpath-stage .trustpath-shell {
+                opacity: .46
+            }
+
+            .trust-flow-overlay {
+                left: 6vw;
+                right: 6vw;
+                padding: 39vh 0 8vh
+            }
+
+            .trust-flow-stage {
+                grid-template-columns: 1fr;
+                min-height: 0;
+                gap: 8px
+            }
+
+            .trust-flow-col:not(.trust-flow-sources) {
+                display: none
+            }
+
+            .trust-source {
+                display: inline-block;
+                width: auto;
+                margin: 7px 6px 0 0
+            }
+        }
+
+        .trustpath-stage .trustpath-shell {
+            position: absolute;
+            inset: 0 0 0 auto;
+            width: 64%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        #trustCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .trustpath-shell:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(90deg, rgba(9, 10, 12, .97), rgba(9, 10, 12, .44) 22%, transparent 48%),
+                linear-gradient(180deg, rgba(9, 10, 12, .10), transparent 28%, rgba(9, 10, 12, .16));
+        }
+
+        .trust-flow {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            padding: 15vh 6vw 8vh 4vw;
+            pointer-events: none;
+        }
+
+        .trust-flow-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(242, 240, 235, .08);
+        }
+
+        .trust-flow-top span,
+        .trust-label {
+            font: 500 8px var(--mono);
+            letter-spacing: .12em;
+            color: var(--faint);
+        }
+
+        .trust-flow-top b {
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: var(--info);
+        }
+
+        .trust-sankey {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr .74fr;
+            gap: 2.6vw;
+            height: 56vh;
+            padding-top: 18px;
+        }
+
+        .trust-col {
+            position: relative;
+            min-width: 0
+        }
+
+        .trust-label {
+            display: block;
+            padding-bottom: 9px;
+            border-bottom: 1px solid rgba(242, 240, 235, .05)
+        }
+
+        .trust-node {
+            width: min(150px, 100%);
+            margin-top: 26px;
+            padding: 11px 12px 10px;
+            border: 1px solid rgba(242, 240, 235, .10);
+            background: rgba(9, 10, 12, .60);
+            opacity: .34;
+            transform: translateX(-8px);
+            transition: opacity .45s var(--ease), transform .45s var(--ease), border-color .45s var(--ease);
+        }
+
+        .trust-node.is-active {
+            opacity: 1;
+            transform: none
+        }
+
+        .trust-node b {
+            display: block;
+            font: 600 10px var(--display)
+        }
+
+        .trust-node small {
+            display: block;
+            margin-top: 4px;
+            font: 500 7px var(--mono);
+            color: #6e726c
+        }
+
+        .trust-node--text {
+            border-left-color: rgba(239, 108, 47, .50)
+        }
+
+        .trust-node--visual {
+            border-left-color: rgba(242, 240, 235, .42)
+        }
+
+        .trust-node--acoustic {
+            border-left-color: rgba(121, 197, 207, .58)
+        }
+
+        .trust-node--biometric {
+            border-left-color: rgba(126, 180, 139, .58)
+        }
+
+        .trust-rel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 250px;
+            margin-top: 61px;
+            padding: 10px 12px;
+            border-left: 1px solid rgba(121, 197, 207, .40);
+            background: linear-gradient(90deg, rgba(121, 197, 207, .05), transparent);
+            opacity: .24;
+            transform: translateX(8px);
+            transition: opacity .5s var(--ease), transform .55s var(--ease);
+        }
+
+        .trust-rel--claim {
+            margin-top: 77px
+        }
+
+        .trust-rel--identity {
+            margin-top: 79px
+        }
+
+        .trust-rel.is-active {
+            opacity: 1;
+            transform: none
+        }
+
+        .trust-rel span {
+            font: 500 8px var(--mono);
+            letter-spacing: .07em;
+            color: #9ca099
+        }
+
+        .trust-rel b {
+            font: 500 8px var(--mono);
+            color: #d7d8d2
+        }
+
+        .trust-case {
+            width: min(190px, 100%);
+            aspect-ratio: 1.18;
+            margin: 137px 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(239, 108, 47, .34);
+            background: radial-gradient(circle, rgba(239, 108, 47, .08), transparent 63%), rgba(9, 10, 12, .72);
+            opacity: .30;
+            transform: scale(.90);
+            transition: opacity .65s var(--ease), transform .7s var(--ease), border-color .65s var(--ease), box-shadow .7s var(--ease);
+        }
+
+        .trust-case.is-forming {
+            opacity: .72;
+            transform: scale(1);
+            box-shadow: 0 0 70px rgba(239, 108, 47, .10)
+        }
+
+        .trust-case.is-resolved {
+            opacity: 1;
+            border-color: rgba(239, 108, 47, .66);
+            box-shadow: 0 0 95px rgba(239, 108, 47, .15)
+        }
+
+        .trust-case span {
+            font: 600 14px var(--display);
+            letter-spacing: .10em
+        }
+
+        .trust-case strong {
+            margin-top: 6px;
+            font: 500 8px var(--mono);
+            letter-spacing: .08em;
+            color: #aeb0aa
+        }
+
+        .trust-case small {
+            margin-top: 11px;
+            font: 500 7px var(--mono);
+            letter-spacing: .09em;
+            color: var(--signal)
+        }
+
+        .trust-flow-bottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(242, 240, 235, .07);
+            font: 500 7px var(--mono);
+            letter-spacing: .08em;
+            color: #626660;
+        }
+
+        .trust-flow-bottom span:first-child {
+            color: #a4a79f
+        }
+
+        .trustpath-copy {
+            max-width: 700px
+        }
+
+        @media(max-width:1080px) {
+            .trustpath-stage .trustpath-shell {
+                width: 100%;
+                opacity: .72
+            }
+
+            .trust-flow {
+                padding: 15vh 6vw 8vh 45vw
+            }
+        }
+
+        @media(max-width:720px) {
+            .trustpath-stage .trustpath-shell {
+                opacity: .40
+            }
+
+            .trust-flow {
+                left: 6vw;
+                right: 6vw;
+                padding: 38vh 0 8vh
+            }
+
+            .trust-sankey {
+                grid-template-columns: 1fr;
+                height: auto
+            }
+
+            .trust-col--relations,
+            .trust-col--case {
+                display: none
+            }
+        }
+
+        .trustpath-legend,
+        .trustpath-hint {
+            display: none !important;
+        }
+
+        .trustpath-stage .trustpath-shell {
+            width: 64% !important;
+            opacity: 1 !important;
+        }
+
+        /* ================================================================
+   TAKE 21 — SCROLL NARRATIVE & DIEGETIC LAYER
+   ================================================================ */
+
+        .reveal {
+            opacity: 0;
+            translate: 0 22px;
+            transition:
+                opacity .95s var(--ease-out),
+                translate 1.05s var(--ease-out);
+            transition-delay: calc(var(--reveal-delay, 0) * 55ms);
+            will-change: opacity, translate;
+        }
+
+        .reveal.is-revealed {
+            opacity: 1;
+            translate: 0 0;
+        }
+
+        .scene-stage:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 42%, rgba(0, 0, 0, .28) 100%);
+            transition: opacity 1.2s var(--ease-out);
+        }
+
+        .scene.is-active .scene-stage:before {
+            opacity: 1;
+        }
+
+        .scene-stage .scan-trace {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 1px;
+            z-index: 3;
+            pointer-events: none;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(239, 108, 47, .34) 22%,
+                    rgba(239, 108, 47, .60) 50%,
+                    rgba(239, 108, 47, .34) 78%,
+                    transparent);
+            opacity: 0;
+            transform: translate3d(0, 14vh, 0);
+            transition: opacity 1s var(--ease);
+            box-shadow: 0 0 18px rgba(239, 108, 47, .24);
+            will-change: transform, opacity;
+        }
+
+        .scene.is-active .scene-stage .scan-trace {
+            opacity: .55;
+        }
+
+        .scene--light.is-active .scene-stage .scan-trace {
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(23, 24, 22, .22) 22%,
+                    rgba(23, 24, 22, .46) 50%,
+                    rgba(23, 24, 22, .22) 78%,
+                    transparent);
+            box-shadow: none;
+        }
+
+        .story-progress {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 7px;
+        }
+
+        .story-progress .story-progress-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .story-progress .story-progress-bar {
+            width: 128px;
+            height: 1px;
+            background: rgba(242, 240, 235, .12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene--light .story-progress .story-progress-bar {
+            background: rgba(23, 24, 22, .18);
+        }
+
+        .story-progress .story-progress-bar span {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, var(--signal), var(--signal-2));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .18s linear;
+            box-shadow: 0 0 6px rgba(239, 108, 47, .35);
+        }
+
+        .lui {
+            transition: box-shadow .6s var(--ease), border-color .6s var(--ease);
+        }
+
+        .lui.is-updating {
+            animation: lui-pulse .95s var(--ease-out);
+        }
+
+        .lui.is-updating .lui-message {
+            animation: lui-message-in .55s var(--ease-out);
+        }
+
+        @keyframes lui-pulse {
+            0% {
+                box-shadow: 0 18px 54px rgba(0, 0, 0, .34), 0 0 0 0 rgba(239, 108, 47, 0);
+            }
+
+            38% {
+                box-shadow: 0 18px 54px rgba(0, 0, 0, .34), 0 0 0 6px rgba(239, 108, 47, .13);
+            }
+
+            100% {
+                box-shadow: 0 18px 54px rgba(0, 0, 0, .34), 0 0 0 0 rgba(239, 108, 47, 0);
+            }
+        }
+
+        @keyframes lui-message-in {
+            0% {
+                opacity: 0;
+                translate: 0 3px;
+            }
+
+            100% {
+                opacity: 1;
+                translate: 0 0;
+            }
+        }
+
+        .paper {
+            transition:
+                filter .55s var(--ease),
+                box-shadow .55s var(--ease);
+        }
+
+        .paper-stack:hover .paper {
+            filter: brightness(.78) saturate(.72);
+        }
+
+        .paper-stack .paper:hover {
+            filter: none;
+            z-index: 8;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1 !important;
+                translate: 0 0 !important;
+                transition: none !important;
+            }
+
+            .scene-stage .scan-trace {
+                display: none !important;
+            }
+
+            .lui.is-updating,
+            .lui.is-updating .lui-message {
+                animation: none !important;
+            }
+        }
+
+        @media (max-width:720px) {
+            .story-progress .story-progress-bar {
+                width: 90px;
+            }
+        }
+
+        /* ================================================================
+   TAKE 27 — RADIAL NETWORK LAYOUT FOR TRUSTPATH
+   -----------------------------------------------------------------
+   Converts the linear sankey into a hub-and-spoke relationship map:
+   • CASE at center
+   • Relationship pills on an inner ring
+   • Evidence sources on an outer ring
+   • Canvas2D engine draws smooth curved connections between them
+   ================================================================ */
+
+        .trust-flow {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .trust-flow-top,
+        .trust-flow-bottom {
+            flex: 0 0 auto;
+        }
+
+        .trust-radial {
+            position: relative;
+            flex: 1 1 auto;
+            width: 100%;
+            min-height: 0;
+        }
+
+        .trust-radial .trust-node,
+        .trust-radial .trust-rel,
+        .trust-radial .trust-case {
+            position: absolute;
+            left: var(--x);
+            top: var(--y);
+            margin: 0 !important;
+            z-index: 2;
+            transition:
+                opacity .55s var(--ease),
+                transform .6s var(--ease),
+                border-color .5s var(--ease),
+                box-shadow .55s var(--ease);
+        }
+
+        /* Evidence nodes — outer ring */
+        .trust-radial .trust-node {
+            width: clamp(110px, 18%, 170px);
+            padding: 11px 13px 10px;
+            transform: translate(-50%, -50%) scale(.92);
+            opacity: .38;
+            border: 1px solid rgba(242, 240, 235, .14);
+            background: linear-gradient(180deg, rgba(22, 24, 28, .82), rgba(9, 10, 12, .82));
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .05),
+                0 8px 20px rgba(0, 0, 0, .32);
+            overflow: hidden;
+        }
+
+        .trust-radial .trust-node:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: currentColor;
+            box-shadow: 0 0 12px currentColor;
+            opacity: .55;
+            transition: opacity .45s var(--ease), box-shadow .45s var(--ease);
+        }
+
+        .trust-radial .trust-node.is-active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            border-color: rgba(242, 240, 235, .26);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .08),
+                0 14px 32px rgba(0, 0, 0, .42),
+                0 0 24px -8px currentColor;
+        }
+
+        .trust-radial .trust-node.is-active:after {
+            opacity: 1;
+            box-shadow: 0 0 18px currentColor;
+        }
+
+        .trust-radial .trust-node--text {
+            color: var(--signal);
+            border-left-color: rgba(239, 108, 47, .65);
+        }
+
+        .trust-radial .trust-node--visual {
+            color: #f0eee6;
+            border-left-color: rgba(242, 240, 235, .58);
+        }
+
+        .trust-radial .trust-node--acoustic {
+            color: var(--info);
+            border-left-color: rgba(121, 197, 207, .72);
+        }
+
+        .trust-radial .trust-node--biometric {
+            color: var(--positive);
+            border-left-color: rgba(126, 180, 139, .72);
+        }
+
+        .trust-radial .trust-node b {
+            display: block;
+            font: 600 10px var(--display);
+            letter-spacing: .10em;
+            color: #f6f4f0;
+        }
+
+        .trust-radial .trust-node small {
+            display: block;
+            margin-top: 4px;
+            font: 500 7px var(--mono);
+            letter-spacing: .06em;
+            color: #8d918a;
+        }
+
+        /* Relationship pills — inner ring */
+        .trust-radial .trust-rel {
+            width: clamp(140px, 22%, 220px);
+            max-width: none;
+            padding: 11px 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transform: translate(-50%, -50%) scale(.92);
+            opacity: .35;
+            border-left: 2px solid rgba(121, 197, 207, .75);
+            border-top: 1px solid rgba(242, 240, 235, .10);
+            border-right: 1px solid rgba(242, 240, 235, .08);
+            border-bottom: 1px solid rgba(242, 240, 235, .08);
+            background:
+                linear-gradient(90deg,
+                    rgba(121, 197, 207, .14),
+                    rgba(121, 197, 207, .03) 45%,
+                    rgba(9, 10, 12, .85) 82%);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .04),
+                0 6px 18px rgba(0, 0, 0, .32);
+        }
+
+        .trust-radial .trust-rel.is-active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .06),
+                0 10px 26px rgba(0, 0, 0, .38);
+        }
+
+        .trust-radial .trust-rel--claim {
+            border-left-color: rgba(239, 108, 47, .82);
+            background:
+                linear-gradient(90deg,
+                    rgba(239, 108, 47, .14),
+                    rgba(239, 108, 47, .03) 45%,
+                    rgba(9, 10, 12, .85) 82%);
+        }
+
+        .trust-radial .trust-rel--identity {
+            border-left-color: rgba(126, 180, 139, .82);
+            background:
+                linear-gradient(90deg,
+                    rgba(126, 180, 139, .14),
+                    rgba(126, 180, 139, .03) 45%,
+                    rgba(9, 10, 12, .85) 82%);
+        }
+
+        .trust-radial .trust-rel span {
+            font: 500 8px var(--mono);
+            letter-spacing: .10em;
+            color: #c0c4bc;
+        }
+
+        .trust-radial .trust-rel b {
+            font: 600 9px var(--mono);
+            letter-spacing: .12em;
+            color: #f6f4f0;
+        }
+
+        /* Case — center */
+        .trust-radial .trust-case {
+            width: clamp(150px, 22%, 210px);
+            aspect-ratio: 1.16;
+            margin: 0 !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translate(-50%, -50%) scale(.90);
+            opacity: .42;
+            border: 1px solid rgba(239, 108, 47, .46);
+            background:
+                radial-gradient(circle at 50% 50%, rgba(239, 108, 47, .14), transparent 62%),
+                linear-gradient(180deg, rgba(22, 24, 28, .88), rgba(9, 10, 12, .88));
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .05),
+                0 0 0 1px rgba(239, 108, 47, .10),
+                0 12px 34px rgba(0, 0, 0, .38);
+            overflow: hidden;
+        }
+
+        .trust-radial .trust-case:before,
+        .trust-radial .trust-case:after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1px solid var(--signal);
+            opacity: .75;
+            pointer-events: none;
+        }
+
+        .trust-radial .trust-case:before {
+            left: -1px;
+            top: -1px;
+            border-right: 0;
+            border-bottom: 0;
+        }
+
+        .trust-radial .trust-case:after {
+            right: -1px;
+            bottom: -1px;
+            border-left: 0;
+            border-top: 0;
+        }
+
+        .trust-radial .trust-case.is-forming {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: .82;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .06),
+                0 0 0 1px rgba(239, 108, 47, .18),
+                0 0 60px rgba(239, 108, 47, .18),
+                0 14px 36px rgba(0, 0, 0, .42);
+        }
+
+        .trust-radial .trust-case.is-resolved {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            border-color: rgba(239, 108, 47, .82);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, .08),
+                0 0 0 1px rgba(239, 108, 47, .24),
+                0 0 80px rgba(239, 108, 47, .28),
+                0 16px 40px rgba(0, 0, 0, .46);
+        }
+
+        .trust-radial .trust-case span {
+            font: 600 14px var(--display);
+            letter-spacing: .10em;
+            color: #f6f4f0;
+        }
+
+        .trust-radial .trust-case strong {
+            margin-top: 6px;
+            font: 500 8px var(--mono);
+            letter-spacing: .12em;
+            color: #d6d3cc;
+        }
+
+        .trust-radial .trust-case small {
+            margin-top: 11px;
+            font: 500 7px var(--mono);
+            letter-spacing: .14em;
+            color: var(--signal);
+        }
+
+        @media (max-width:1080px) {
+            .trust-radial .trust-node {
+                width: clamp(90px, 16%, 140px);
+            }
+
+            .trust-radial .trust-rel {
+                width: clamp(110px, 20%, 180px);
+            }
+
+            .trust-radial .trust-case {
+                width: clamp(120px, 18%, 170px);
+            }
+        }
+
+        @media (max-width:720px) {
+            .trust-radial .trust-node {
+                width: clamp(80px, 22%, 110px);
+            }
+
+            .trust-radial .trust-rel {
+                width: clamp(100px, 28%, 150px);
+            }
+
+            .trust-radial .trust-case {
+                width: clamp(100px, 26%, 140px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reduced-motion" aria-hidden="true"></div>
+
+    <div class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="#intro" aria-label="LinguaShield home">
+                <img class="brand-logo" src="LS.png" alt="">
+                <span class="brand-name">LINGUA<span>SHIELD</span></span>
+            </a>
+
+            <nav class="primary-nav" id="primaryNav" aria-label="Analysis modules">
+                <a href="#text" data-module="text">Text</a>
+                <a href="#visual" data-module="visual">Visual</a>
+                <a href="#acoustic" data-module="acoustic">Acoustic</a>
+                <a href="#biometric" data-module="biometric">Biometric</a>
+                <a href="#live" data-module="live">Live</a>
+                <a href="#trustpath" data-module="trustpath">TrustPath</a>
+            </nav>
+
+            <div class="global-progress" aria-hidden="true"><span id="globalProgress"></span></div>
+        </header>
+
+        <aside class="lui" id="luiPanel" aria-live="polite">
+            <div class="lui-head">
+                <div class="lui-persona">
+                    <div class="lui-face" aria-hidden="true"></div>
+                    <div>
+                        <div class="lui-name">LUI</div>
+                        <div class="lui-role" id="luiRole">INVESTIGATION COPILOT</div>
+                    </div>
+                </div>
+                <div class="lui-state" id="luiState">READY</div>
+            </div>
+            <div class="lui-body">
+                <p class="lui-message" id="luiMessage">The investigation is assembled around evidence, not the
+                    interface.</p>
+                <span class="lui-meta" id="luiMeta">CONTEXT // GLOBAL</span>
+                <div class="lui-meter" aria-hidden="true"><span id="luiMeter"></span></div>
+            </div>
+        </aside>
+    </div>
+
+    <main id="story">
+        <section class="scene scene--hero" id="intro" data-lui-role="INVESTIGATION COPILOT" data-lui-state="READY"
+            data-lui-meta="CONTEXT // GLOBAL"
+            data-lui-message="The investigation begins with a signal. LUI stays present while the evidence is separated, analyzed, and verified.">
+            <div class="scene-stage">
+                <div class="scene-shell">
+                    <canvas id="evidenceCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+                </div>
+
+                <div class="hero-instrument" id="heroInstrument" aria-hidden="true">
+                    <div class="instrument-ring"></div>
+                    <div class="instrument-cross"></div>
+                    <div class="instrument-beam"></div>
+                    <div class="instrument-center"><span>SCAN</span></div>
+                    <span class="instrument-label instrument-label--a">SOURCE / LIVE</span>
+                    <span class="instrument-label instrument-label--b">TRACE / ACTIVE</span>
+                    <span class="instrument-label instrument-label--c">EVIDENCE FIELD</span>
+                </div>
+
+                <div class="hero-forensic-icons" id="heroForensicIcons" aria-hidden="true">
+                    <div class="hero-forensic-icon hero-forensic-icon--claim" data-hero-icon="claim">
+                        <svg viewBox="0 0 120 120" role="presentation">
+                            <path class="hfi-frame" d="M30 16h45l15 15v73H30z" />
+                            <path class="hfi-fold" d="M75 16v16h15" />
+                            <path class="hfi-line" d="M45 52h30M45 65h22M45 78h28" />
+                            <path class="hfi-quote"
+                                d="M47 38c-4 0-7 3-7 7s3 7 7 7h4v-9h-5m30-5c-4 0-7 3-7 7s3 7 7 7h4v-9h-5" />
+                            <path class="hfi-bracket" d="M20 39v-9h9M91 91h9v-9" />
+                        </svg>
+                        <span>CLAIM</span>
+                    </div>
+
+                    <div class="hero-forensic-icon hero-forensic-icon--visual" data-hero-icon="visual">
+                        <svg viewBox="0 0 120 120" role="presentation">
+                            <path class="hfi-frame" d="M28 35V24h11M81 24h11v11M92 81v11H81M39 92H28V81" />
+                            <rect class="hfi-box" x="35" y="31" width="50" height="58" rx="1" />
+                            <circle class="hfi-lens" cx="60" cy="60" r="13" />
+                            <circle class="hfi-dot" cx="60" cy="60" r="3" />
+                            <path class="hfi-line" d="M44 42h12M72 42h5M44 78h10" />
+                        </svg>
+                        <span>VISUAL</span>
+                    </div>
+
+                    <div class="hero-forensic-icon hero-forensic-icon--acoustic" data-hero-icon="acoustic">
+                        <svg viewBox="0 0 120 120" role="presentation">
+                            <path class="hfi-grid" d="M26 36h68M26 60h68M26 84h68" />
+                            <path class="hfi-wave" d="M27 60h9l5-17 7 34 7-52 7 70 7-53 7 31 7-20 6 7h9" />
+                            <path class="hfi-ticks"
+                                d="M36 28v8M48 28v8M60 28v8M72 28v8M84 28v8M36 84v8M48 84v8M60 84v8M72 84v8M84 84v8" />
+                        </svg>
+                        <span>ACOUSTIC</span>
+                    </div>
+
+                    <div class="hero-forensic-icon hero-forensic-icon--biometric" data-hero-icon="biometric">
+                        <svg viewBox="0 0 120 120" role="presentation">
+                            <path class="hfi-finger"
+                                d="M60 24c-18 0-31 12-31 29 0 8 3 15 7 21M60 33c-12 0-21 8-21 20 0 10 5 17 11 23M60 42c-7 0-12 5-12 12 0 12 10 19 20 28M60 51c-2 0-4 2-4 5 0 7 7 11 15 16M69 29c11 4 17 13 17 25 0 16-7 29-19 39M79 36c7 5 11 12 11 21 0 15-5 27-14 37M88 51c2 10 0 19-5 28" />
+                            <path class="hfi-scan" d="M28 93h64" />
+                            <circle class="hfi-dot" cx="60" cy="24" r="2.4" />
+                        </svg>
+                        <span>IDENTITY</span>
+                    </div>
+
+                    <div class="hero-forensic-icon hero-forensic-icon--case" data-hero-icon="case">
+                        <svg viewBox="0 0 150 150" role="presentation">
+                            <rect class="hfi-case" x="39" y="37" width="72" height="76" rx="2" />
+                            <path class="hfi-tab" d="M52 37v-9h28l8 9" />
+                            <path class="hfi-line" d="M55 58h40M55 71h30M55 84h36" />
+                            <path class="hfi-center" d="M75 58v38M56 77h38" />
+                            <circle class="hfi-ring" cx="75" cy="77" r="22" />
+                        </svg>
+                        <span>CASE</span>
+                    </div>
+                </div>
+
+                <div class="hero-aside">
+                    <span>SIGNAL / 01</span>
+                    <strong>Receive → isolate → verify</strong>
+                    <p>The opening sequence establishes context before the user enters a working module.</p>
+                </div>
+
+                <div class="scene-inner">
+                    <div class="copy hero-copy story-copy" id="heroCopy">
+                        <div class="eyebrow">LINGUASHIELD / FORENSIC INTELLIGENCE</div>
+                        <h1 class="display hero-title">
+                            <span class="line">Understand the <em>signal.</em></span>
+                            <span class="line">Verify the story.</span>
+                        </h1>
+                        <p class="lede">Six specialized analysis layers, one investigation environment. Communication
+                            becomes evidence when the system can show what happened, why it matters, and what the
+                            evidence actually supports.</p>
+                        <div class="actions">
+                            <button class="btn btn--primary" data-open-workbench>Open investigation</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-progress"><i></i><span>01 / SIGNAL</span></div>
+            </div>
+        </section>
+
+        <section class="scene scene--tall" id="text" data-lui-role="LANGUAGE ANALYST" data-lui-state="ANALYSE"
+            data-lui-meta="MODULE // TEXT"
+            data-lui-message="Three behavioral cues are emerging: urgency, authority pressure, and a direct action request. The language layer is the first witness.">
+            <div class="scene-stage text-stage">
+                <div class="scene-inner">
+                    <div class="module-layout module-layout--dark">
+                        <div class="copy story-copy">
+                            <div class="eyebrow">02 / TEXT ANALYSIS</div>
+                            <h2 class="display">Read the <em>pressure.</em></h2>
+                            <p class="lede">Text is not only content. It is a sequence of claims, requests, promises,
+                                threats, and social cues. LinguaShield preserves the signals that change a person's
+                                decision-making.</p>
+
+                            <div class="signal-quote">
+                                “Your <mark>bank account will be blocked</mark>. <mark>Verify your payment
+                                    immediately.</mark>”
+                            </div>
+                        </div>
+
+                        <div class="text-evidence story-copy" aria-label="Text evidence interpretation">
+                            <div class="evidence-kicker">LANGUAGE EVIDENCE</div>
+                            <div class="text-evidence-head">
+                                <strong>CLAIM STRUCTURE</strong>
+                                <span>03 SIGNALS</span>
+                            </div>
+                            <div class="claim-list">
+                                <div class="claim-row">
+                                    <span class="claim-index">01</span>
+                                    <div><b>AUTHORITY</b><small>Institutional consequence is implied.</small></div>
+                                </div>
+                                <div class="claim-row claim-row--active">
+                                    <span class="claim-index">02</span>
+                                    <div><b>URGENCY</b><small>Immediate compliance is requested.</small></div>
+                                </div>
+                                <div class="claim-row">
+                                    <span class="claim-index">03</span>
+                                    <div><b>ACTION REQUEST</b><small>Payment verification is the requested next
+                                            step.</small></div>
+                                </div>
+                            </div>
+                            <div class="evidence-foot">
+                                <span>CONFIDENCE <b>90.9%</b></span>
+                                <span>VECTOR SET <b>03</b></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-progress"><i></i><span>02 / LANGUAGE</span></div>
+            </div>
+        </section>
+
+        <section class="scene scene--tall scene--light" id="visual" data-lui-role="VISUAL FORENSICS"
+            data-lui-state="INSPECT" data-lui-meta="MODULE // VISUAL"
+            data-lui-message="The visual layer preserves what the user can actually see. OCR, visible regions, and source context become inspectable evidence.">
+            <div class="scene-stage visual-stage">
+                <div class="scene-inner">
+                    <div class="module-layout module-layout--light">
+                        <div class="copy story-copy">
+                            <div class="eyebrow">03 / VISUAL FORENSICS</div>
+                            <h2 class="display">See what the <em>message shows.</em></h2>
+                            <p class="lede">OCR, visible-content inspection, provenance, and synthetic-media signals
+                                become one visual evidence layer.</p>
+                            <div class="actions">
+                                <button class="btn" data-toast="Visual evidence inspection ready">Inspect visual
+                                    evidence</button>
+                            </div>
+                        </div>
+
+                        <div class="paper-inspection story-copy" aria-label="Visual evidence inspection">
+                            <div class="paper-stack">
+                                <article class="paper paper--back">
+                                    <div class="paper-meta">SOURCE / IMAGE_01</div>
+                                    <div class="paper-title">BANK ACCOUNT ALERT</div>
+                                    <div class="paper-rule"></div>
+                                    <div class="paper-image" aria-hidden="true"></div>
+                                    <div class="paper-foot"><span>VISIBLE REGION</span><b>01</b></div>
+                                </article>
+                                <article class="paper paper--middle">
+                                    <div class="paper-meta">OCR / EXTRACT</div>
+                                    <div class="paper-title">PAYMENT INSTRUCTION</div>
+                                    <div class="paper-rule"></div>
+                                    <p class="paper-copy">“Verify your payment immediately.”</p>
+                                    <div class="paper-highlight">ACTION REQUEST</div>
+                                    <div class="paper-foot"><span>OCR CONFIDENCE</span><b>98%</b></div>
+                                </article>
+                                <article class="paper paper--front">
+                                    <div class="paper-meta">CROSS-EVIDENCE</div>
+                                    <div class="paper-title">MATCHING CLAIM</div>
+                                    <div class="paper-rule"></div>
+                                    <p class="paper-copy">Same extracted content as TEXT_01.</p>
+                                    <div class="paper-highlight paper-highlight--dark">RELATION 92%</div>
+                                    <div class="paper-foot"><span>RELATIONSHIP</span><b>SAME CLAIM</b></div>
+                                </article>
+                            </div>
+                            <div class="paper-caption"><span>VISUAL FORENSICS</span><b>01 / 03 EVIDENCE SHEETS</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-progress"><i></i><span>03 / VISUAL</span></div>
+            </div>
+        </section>
+
+        <section class="scene scene--tall" id="acoustic" data-lui-role="ACOUSTIC ANALYST" data-lui-state="LISTEN"
+            data-lui-meta="MODULE // ACOUSTIC"
+            data-lui-message="The acoustic stream is active. Timing, pauses, spectral behavior, and anomalies are preserved for later correlation.">
+            <div class="scene-stage acoustic-stage">
+                <div class="scene-inner">
+                    <div class="module-layout module-layout--dark">
+                        <div class="copy story-copy">
+                            <div class="eyebrow">04 / ACOUSTIC ANALYSIS</div>
+                            <h2 class="display">Listen beyond the <em>voice.</em></h2>
+                            <p class="lede">Audio is treated as structured evidence. Speech characteristics and
+                                anomalous signatures remain visible without collapsing them into an unexplained label.
+                            </p>
+                            <div class="acoustic-readout">
+                                <span>STREAM</span><strong>AUDIO_02</strong>
+                                <span>STATE</span><strong>ANALYZING</strong>
+                                <span>TRACE</span><strong>AVAILABLE FOR CORRELATION</strong>
+                            </div>
+                        </div>
+
+                        <div class="acoustic-visual story-copy" aria-label="Acoustic signal visualization">
+                            <div class="signal-panel-head">
+                                <span>ACOUSTIC SIGNAL FIELD</span><b>ACTIVE</b>
+                            </div>
+
+                            <div class="spectral-wavefield" aria-hidden="true">
+                                <div class="spectral-grid"></div>
+
+                                <svg class="spectral-svg" viewBox="0 0 900 360" preserveAspectRatio="none">
+                                    <path class="trace trace--amber" d="M0,214
+                                           C55,182 74,248 128,220
+                                           S205,154 255,207
+                                           S330,276 385,198
+                                           S458,153 505,204
+                                           S575,245 620,188
+                                           S705,143 756,203
+                                           S823,252 900,180" />
+                                    <path class="trace trace--cyan" d="M0,236
+                                           C44,226 78,248 112,211
+                                           S188,172 236,224
+                                           S310,264 362,205
+                                           S435,134 488,202
+                                           S560,271 612,216
+                                           S688,174 735,210
+                                           S814,278 900,214" />
+                                    <path class="trace trace--critical" d="M0,286
+                                           C36,264 70,315 112,283
+                                           S178,226 219,281
+                                           S292,324 336,270
+                                           S398,232 448,275
+                                           S510,318 552,269
+                                           S620,228 665,284
+                                           S747,329 792,270
+                                           S853,240 900,278" />
+                                </svg>
+
+                                <div class="spectral-cursor"></div>
+
+                                <div class="spectral-scale">
+                                    <span>LOW</span>
+                                    <span>MID</span>
+                                    <span>HIGH</span>
+                                </div>
+                            </div>
+
+                            <div class="spectral-readout">
+                                <span><i class="spectral-dot spectral-dot--amber"></i>BASELINE</span>
+                                <span><i class="spectral-dot spectral-dot--cyan"></i>VOICE SIGNAL</span>
+                                <span><i class="spectral-dot spectral-dot--critical"></i>ANOMALY TRACE</span>
+                            </div>
+
+                            <div class="spectral-time">
+                                <span>00:00</span><span>00:08</span><span>00:17</span><span>00:24</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="story-progress"><i></i><span>04 / ACOUSTIC</span></div>
+            </div>
+        </section>
+
+        <section class="scene scene--tall" id="biometric" data-lui-role="IDENTITY ANALYST" data-lui-state="COMPARE"
+            data-lui-meta="MODULE // BIOMETRIC"
+            data-lui-message="Reference and test voices are compared independently. A mismatch changes the meaning of the case; a match does not erase other evidence.">
+            <div class="scene-stage biometric-stage">
+                <div class="scene-inner">
+                    <div class="module-layout module-layout--dark">
+                        <div class="copy story-copy">
+                            <div class="eyebrow">05 / BIOMETRIC IDENTITY</div>
+                            <h2 class="display">Verify the <em>person.</em></h2>
+                            <p class="lede">Reference and test voices remain distinct so identity can be evaluated
+                                without turning identity confidence into overall threat risk.</p>
+                            <div class="identity-note">IDENTITY STATE // NOT VERIFIED · RESULT REMAINS SEPARATE FROM
+                                CASE RISK</div>
+                        </div>
+
+                        <div class="identity-visual story-copy" aria-label="Biometric voice comparison">
+                            <div class="identity-head">
+                                <span>VOICE SIGNATURE</span>
+                                <b>IDENTITY COMPARISON</b>
+                            </div>
+
+                            <div class="voice-comparison">
+                                <div class="voice-channel voice-channel--reference">
+                                    <div class="voice-channel-head">
+                                        <span>REFERENCE VOICE</span>
+                                        <small>BASELINE</small>
+                                    </div>
+                                    <div class="soundwave" aria-hidden="true">
+                                        <i style="--h:24%"></i><i style="--h:42%"></i><i style="--h:68%"></i><i
+                                            style="--h:38%"></i><i style="--h:78%"></i>
+                                        <i style="--h:92%"></i><i style="--h:58%"></i><i style="--h:34%"></i><i
+                                            style="--h:74%"></i><i style="--h:48%"></i>
+                                        <i style="--h:86%"></i><i style="--h:54%"></i><i style="--h:32%"></i><i
+                                            style="--h:63%"></i><i style="--h:45%"></i>
+                                        <i style="--h:81%"></i><i style="--h:57%"></i><i style="--h:36%"></i><i
+                                            style="--h:70%"></i><i style="--h:50%"></i>
+                                    </div>
+                                </div>
+
+                                <div class="voice-bridge">
+                                    <span>VS</span>
+                                </div>
+
+                                <div class="voice-channel voice-channel--test">
+                                    <div class="voice-channel-head">
+                                        <span>TEST VOICE</span>
+                                        <small>CHALLENGE</small>
+                                    </div>
+                                    <div class="soundwave" aria-hidden="true">
+                                        <i style="--h:44%"></i><i style="--h:28%"></i><i style="--h:74%"></i><i
+                                            style="--h:50%"></i><i style="--h:88%"></i>
+                                        <i style="--h:64%"></i><i style="--h:36%"></i><i style="--h:92%"></i><i
+                                            style="--h:52%"></i><i style="--h:78%"></i>
+                                        <i style="--h:42%"></i><i style="--h:84%"></i><i style="--h:60%"></i><i
+                                            style="--h:31%"></i><i style="--h:72%"></i>
+                                        <i style="--h:54%"></i><i style="--h:90%"></i><i style="--h:40%"></i><i
+                                            style="--h:66%"></i><i style="--h:48%"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="identity-result">
+                                <span>IDENTITY FINDING</span>
+                                <strong>NOT VERIFIED</strong>
+                                <small>Identity comparison is shown separately from overall case risk.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-progress"><i></i><span>05 / IDENTITY</span></div>
+            </div>
+        </section>
+
+        <section class="scene scene--tall" id="live" data-lui-role="LIVE MONITOR" data-lui-state="MONITOR"
+            data-lui-meta="MODULE // LIVE"
+            data-lui-message="Live analysis is time-aware. LUI surfaces the latest meaningful event while keeping the stream readable and actionable.">
+            <div class="scene-stage live-stage">
+                <div class="scene-inner">
+                    <div class="module-layout module-layout--dark">
+                        <div class="copy story-copy">
+                            <div class="eyebrow">06 / LIVE INTERCEPTION</div>
+                            <h2 class="display">Stay ahead of the <em>moment.</em></h2>
+                            <p class="lede">Live communication is handled as a sequence. The interface surfaces what
+                                changed, when it changed, and what requires attention now.</p>
+                        </div>
+
+                        <div class="live-monitor story-copy" aria-label="Live event monitor">
+                            <div class="live-monitor-head"><span>LIVE SIGNAL</span><b>STREAM ACTIVE</b></div>
+                            <div class="live-monitor-line"><i></i><span>00:17</span><strong>Urgency cue
+                                    detected</strong></div>
+                            <div class="live-monitor-line"><i></i><span>00:12</span><strong>Authority claim
+                                    detected</strong></div>
+                            <div class="live-monitor-line"><i></i><span>00:08</span><strong>Conversation active</strong>
+                            </div>
+                            <div class="live-meter"><span></span></div>
+                            <div class="live-monitor-foot"><span>EVENTS / 03</span><span>ATTENTION / CURRENT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-progress"><i></i><span>06 / LIVE</span></div>
+            </div>
+        </section>
+
+        <!-- 07 / TRUSTPATH — RADIAL RELATIONSHIP NETWORK -->
+        <section class="scene scene--hero scene--tall" id="trustpath" data-lui-role="INVESTIGATION COPILOT"
+            data-lui-state="CORRELATE" data-lui-meta="MODULE // TRUSTPATH"
+            data-lui-message="Evidence streams are being connected through explicit relationships. The case is formed from what the supplied evidence supports.">
+            <div class="scene-stage trustpath-stage">
+                <div class="scene-shell trustpath-shell">
+                    <canvas id="trustCanvas" aria-hidden="true"></canvas>
+                    <div class="trust-flow" aria-hidden="true">
+                        <div class="trust-flow-top">
+                            <span>TRUSTPATH / EVIDENCE FLOW</span>
+                            <b id="trustFlowState">STANDBY</b>
+                        </div>
+
+                        <div class="trust-radial">
+                            <!-- Evidence layer — outer ring -->
+                            <div class="trust-node trust-node--text" data-node="text" style="--x:14%; --y:14%">
+                                <b>TEXT</b><small>Language signal</small>
+                            </div>
+                            <div class="trust-node trust-node--visual" data-node="visual" style="--x:86%; --y:14%">
+                                <b>VISUAL</b><small>Visible evidence</small>
+                            </div>
+                            <div class="trust-node trust-node--acoustic" data-node="acoustic" style="--x:14%; --y:86%">
+                                <b>ACOUSTIC</b><small>Voice signal</small>
+                            </div>
+                            <div class="trust-node trust-node--biometric" data-node="biometric"
+                                style="--x:86%; --y:86%">
+                                <b>BIOMETRIC</b><small>Identity signal</small>
+                            </div>
+
+                            <!-- Relationship layer — inner ring -->
+                            <div class="trust-rel trust-rel--claim" data-rel="claim" style="--x:50%; --y:22%">
+                                <span>SAME CLAIM</span><b>92%</b>
+                            </div>
+                            <div class="trust-rel trust-rel--artifact" data-rel="artifact" style="--x:20%; --y:78%">
+                                <span>SAME SOURCE ARTIFACT</span><b>100%</b>
+                            </div>
+                            <div class="trust-rel trust-rel--identity" data-rel="identity" style="--x:80%; --y:78%">
+                                <span>IDENTITY FINDING</span><b>100%</b>
+                            </div>
+
+                            <!-- Case — center hub -->
+                            <div class="trust-case" id="trustCase" style="--x:50%; --y:50%">
+                                <span>CASE</span>
+                                <strong>TP-42D375</strong>
+                                <small id="trustCaseState">FORMING</small>
+                            </div>
+                        </div>
+
+                        <div class="trust-flow-bottom">
+                            <span id="trustRelationCount">0 relationships</span>
+                            <span id="trustFlowCaption">Evidence waiting to align.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scene-inner">
+                    <div class="trustpath-copy story-copy">
+                        <div class="eyebrow">07 / TRUSTPATH</div>
+                        <h2 class="display">Let the evidence <em>connect.</em></h2>
+                        <p class="lede">Separate findings become a case through explicit relationships: same claim, same
+                            artifact, corroboration, or contradiction.</p>
+                        <div class="trustpath-caption">THE GRAPH IS EXPLAINABLE. EACH CONNECTION HAS A TYPE, A
+                            CONFIDENCE, AND A REASON TO EXIST.</div>
+                    </div>
+                </div>
+
+                <div class="story-progress"><i></i><span>07 / TRUSTPATH</span></div>
+            </div>
+        </section>
+
+        <section class="scene scene--tall" id="assessment" data-lui-role="INVESTIGATION COPILOT" data-lui-state="DECIDE"
+            data-lui-meta="CASE // TP-42D375"
+            data-lui-message="The evidence settles into a conclusion. Risk is a defensible reading of the case, not a sum of module scores.">
+            <div class="scene-stage final-stage">
+                <div class="scene-inner">
+                    <div class="story-copy">
+                        <div class="eyebrow">08 / FINAL ASSESSMENT</div>
+                        <h2 class="display">The story is now <em>traceable.</em></h2>
+                        <div class="final-risk">HIGH</div>
+                        <div class="final-sub">
+                            <div><span>SCENARIO</span><strong>Voice Impersonation</strong></div>
+                            <div><span>CONFIDENCE</span><strong>91%</strong></div>
+                            <div><span>RELATIONSHIPS</span><strong>02 verified</strong></div>
+                        </div>
+                        <div class="final-recommendation">Independent verification recommended. The assessment remains
+                            tied to the evidence and relationships visible in the investigation.</div>
+                        <div class="actions">
+                            <button class="btn btn--primary" data-open-workbench>Enter workbench</button>
+                            <button class="btn" data-toast="Case export is available from the workbench">Export
+                                case</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-progress"><i></i><span>08 / ASSESSMENT</span></div>
+            </div>
+        </section>
+    </main>
+
+    <div class="page-note"><span>LS</span> / SCROLL IS THE INVESTIGATION TIMELINE</div>
+
+    <div class="modal-root" id="workbenchModal" data-open="false" role="dialog" aria-modal="true"
+        aria-labelledby="modalTitle" aria-describedby="modalDescription">
+        <div class="modal" role="document">
+            <div class="modal-head">
+                <h2 id="modalTitle">OPEN INVESTIGATION WORKSPACE</h2>
+                <button class="icon-btn" id="modalClose" aria-label="Close workspace dialog">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="modalDescription">The story layer hands off to the functional LinguaShield workbench. In the
+                    production application this transition preserves the active module, evidence state, LUI actions, and
+                    TrustPath case context.</p>
+                <div class="modal-grid">
+                    <div><span>CASE</span><strong>TP-42D375</strong></div>
+                    <div><span>MODE</span><strong>MULTIMODAL</strong></div>
+                    <div><span>LUI</span><strong>ENABLED</strong></div>
+                    <div><span>HANDOFF</span><strong>READY</strong></div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn" id="modalCancel">Cancel</button>
+                <button class="btn btn--primary" id="modalEnter">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+    <script>
+        (() => {
+            "use strict";
+
+            const $ = (s, c = document) => c.querySelector(s);
+            const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+
+            const sections = $$("section[data-lui-role]");
+            const navLinks = $$("#primaryNav a[data-module]");
+            const progressEl = $("#globalProgress");
+
+            const lui = {
+                panel: $("#luiPanel"),
+                role: $("#luiRole"),
+                state: $("#luiState"),
+                meta: $("#luiMeta"),
+                message: $("#luiMessage"),
+                meter: $("#luiMeter")
+            };
+
+            const trustState = {
+                isTrustPathActive: false,
+                isReducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            };
+            const trustCanvas = $("#trustCanvas");
+
+            let activeSection = null;
+
+            function setLui(section) {
+                if (!section) return;
+                if (section === activeSection) return;
+                activeSection = section;
+
+                lui.role.textContent = section.dataset.luiRole || "INVESTIGATION COPILOT";
+                lui.state.textContent = section.dataset.luiState || "READY";
+                lui.meta.textContent = section.dataset.luiMeta || "CONTEXT // GLOBAL";
+                lui.message.textContent = section.dataset.luiMessage || "";
+
+                const index = Math.max(0, sections.indexOf(section));
+                lui.meter.style.width = `${((index + 1) / sections.length) * 100}%`;
+
+                navLinks.forEach(link => {
+                    link.setAttribute("aria-current", link.dataset.module === section.id ? "true" : "false");
+                });
+
+                sections.forEach(s => s.classList.toggle("is-active", s === section));
+                document.body.dataset.activeScene = section.id;
+
+                lui.panel.classList.remove("is-updating");
+                void lui.panel.offsetWidth;
+                lui.panel.classList.add("is-updating");
+                clearTimeout(setLui.timer);
+                setLui.timer = setTimeout(() => lui.panel.classList.remove("is-updating"), 1000);
+            }
+
+            function syncActiveSection() {
+                const viewportCenter = innerHeight * .5;
+                let winner = null;
+                let best = Infinity;
+
+                for (const section of sections) {
+                    const rect = section.getBoundingClientRect();
+                    const visible = rect.bottom > innerHeight * .18 && rect.top < innerHeight * .82;
+                    if (!visible) continue;
+
+                    const center = rect.top + Math.min(rect.height, innerHeight) * .5;
+                    const distance = Math.abs(center - viewportCenter);
+
+                    if (distance < best) {
+                        best = distance;
+                        winner = section;
+                    }
+                }
+
+                if (winner && winner !== activeSection) setLui(winner);
+                trustState.isTrustPathActive = !!winner && (winner.id === "trustpath" || winner.id === "assessment");
+            }
+
+            function toast(message) {
+                const node = $("#toast");
+                node.textContent = message;
+                node.classList.remove("show");
+                void node.offsetWidth;
+                node.classList.add("show");
+                clearTimeout(toast.timer);
+                toast.timer = setTimeout(() => node.classList.remove("show"), 2600);
+            }
+            $$("[data-toast]").forEach(el => el.addEventListener("click", () => toast(el.dataset.toast)));
+
+            const modal = $("#workbenchModal");
+            let modalTrigger = null;
+
+            function openModal(trigger) {
+                modalTrigger = trigger || null;
+                modal.dataset.open = "true";
+                document.body.classList.add("modal-open");
+                $("#modalClose").focus();
+            }
+            function closeModal() {
+                modal.dataset.open = "false";
+                document.body.classList.remove("modal-open");
+                if (modalTrigger) modalTrigger.focus();
+            }
+
+            $$("[data-open-workbench]").forEach(btn => btn.addEventListener("click", () => openModal(btn)));
+            $("#modalClose").addEventListener("click", closeModal);
+            $("#modalCancel").addEventListener("click", closeModal);
+            $("#modalEnter").addEventListener("click", () => {
+                closeModal();
+                toast("Workbench handoff ready");
+            });
+            modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+
+            let lenis = null;
+            if (window.Lenis) {
+                lenis = new Lenis({
+                    duration: 1.18,
+                    smoothWheel: true,
+                    syncTouch: true,
+                    wheelMultiplier: .76,
+                    touchMultiplier: 1.0,
+                    infinite: false
+                });
+                window.__linguaLenis = lenis;
+            }
+
+            function goTo(selector) {
+                const target = $(selector);
+                if (!target) return;
+                if (lenis) lenis.scrollTo(target, { offset: -16 });
+                else target.scrollIntoView({ behavior: "smooth" });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener("click", e => {
+                    e.preventDefault();
+                    goTo(link.getAttribute("href"));
+                });
+            });
+
+            let scrollY = window.scrollY;
+            let scrollProgress = 0;
+            let heroProgress = 0;
+
+            function readScroll() {
+                scrollY = window.scrollY;
+            }
+            addEventListener("scroll", readScroll, { passive: true });
+
+            function updateScrollState() {
+                const docMax = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+                scrollProgress = Math.min(1, Math.max(0, scrollY / docMax));
+                progressEl.style.transform = `scaleX(${scrollProgress})`;
+
+                const hero = $("#intro");
+                const heroSpan = Math.max(1, hero.offsetHeight - innerHeight);
+                heroProgress = Math.min(1, Math.max(0, (scrollY - hero.offsetTop) / heroSpan));
+
+                const heroCopy = $("#heroCopy");
+                const heroInstrument = $("#heroInstrument");
+                if (heroCopy && heroInstrument) {
+                    const copyX = -heroProgress * 6;
+                    const copyY = -heroProgress * 3;
+                    const copyScale = 1 - heroProgress * .012;
+                    heroCopy.style.transform = `translate3d(${copyX}px,${copyY}px,0) scale(${copyScale})`;
+                    heroCopy.style.opacity = String(1 - heroProgress * .18);
+
+                    const toolX = -14 + heroProgress * 42;
+                    const toolY = heroProgress * 42;
+                    const toolScale = 1 - heroProgress * .12;
+                    heroInstrument.style.transform = `translate3d(${toolX}px,${toolY}px,0) scale(${toolScale}) rotate(${heroProgress * 8}deg)`;
+                    heroInstrument.style.opacity = String(Math.max(.14, .74 - heroProgress * .52));
+                }
+            }
+
+            const canvas = $("#evidenceCanvas");
+            const threeScene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(34, innerWidth / innerHeight, .1, 100);
+            camera.position.set(0, 0.2, 9.6);
+
+            const dprCap = Math.min(window.devicePixelRatio || 1, 1.25);
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                antialias: dprCap <= 1 ? true : false,
+                alpha: true,
+                powerPreference: "high-performance"
+            });
+            renderer.setPixelRatio(dprCap);
+            renderer.setSize(innerWidth, innerHeight, false);
+
+            const root = new THREE.Group();
+            threeScene.add(root);
+
+            const keyLight = new THREE.PointLight(0xef6c2f, 1.45, 24);
+            keyLight.position.set(3, 1.2, 4);
+            threeScene.add(keyLight);
+            const fillLight = new THREE.PointLight(0x79c5cf, 1.0, 20);
+            fillLight.position.set(-3, -1.6, 3);
+            threeScene.add(fillLight);
+
+            const materials = {
+                text: new THREE.MeshBasicMaterial({ color: 0xef6c2f, transparent: true, opacity: .75 }),
+                visual: new THREE.MeshBasicMaterial({ color: 0xf0eee6, wireframe: true, transparent: true, opacity: .22 }),
+                acoustic: new THREE.MeshBasicMaterial({ color: 0x79c5cf, transparent: true, opacity: .64 }),
+                biometric: new THREE.MeshBasicMaterial({ color: 0x7eb48b, transparent: true, opacity: .62 }),
+                case: new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .08 })
+            };
+
+            const nodes = {};
+            const specs = [
+                ["text", -2.1, .8, .1, .34],
+                ["visual", 2.0, .84, -.15, .43],
+                ["acoustic", -1.55, -1.25, .12, .39],
+                ["biometric", 1.75, -1.1, -.18, .37],
+                ["case", 0, 0, 0, .67]
+            ];
+
+            for (const [name, x, y, z] of specs) {
+                // Dedicated SVG forensic icons replace the old decorative 3D hero shapes.
+                // Placeholder objects preserve the existing motion/update flow without rendering those shapes.
+                const mesh = new THREE.Object3D();
+                mesh.position.set(x, y, z);
+                mesh.userData.base = { x, y, z, phase: specs.findIndex(s => s[0] === name) * .45 };
+                root.add(mesh);
+                nodes[name] = mesh;
+            }
+
+            const relations = [
+                ["text", "visual"], ["acoustic", "biometric"],
+                ["case", "text"], ["case", "visual"], ["case", "acoustic"], ["case", "biometric"]
+            ];
+            const lineMaterial = new THREE.LineBasicMaterial({ color: 0xef6c2f, transparent: true, opacity: .08 });
+            const relationLines = [];
+
+            for (const [a, b] of relations) {
+                const buffer = new Float32Array(6);
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute("position", new THREE.BufferAttribute(buffer, 3));
+                const line = new THREE.Line(geometry, lineMaterial.clone());
+                line.frustumCulled = false;
+                root.add(line);
+                relationLines.push({ a, b, line, buffer });
+            }
+
+            const quality = {
+                particles: Math.min(180, Math.max(90, Math.round((navigator.hardwareConcurrency || 4) * 22))),
+                motion: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1
+            };
+
+            const particleGeometry = new THREE.BufferGeometry();
+            const particlePositions = new Float32Array(quality.particles * 3);
+            for (let i = 0; i < quality.particles; i++) {
+                const r = 6 + Math.random() * 15;
+                const a = Math.random() * Math.PI * 2;
+                const b = (Math.random() - .5) * Math.PI * .75;
+                particlePositions[i * 3] = Math.cos(a) * r;
+                particlePositions[i * 3 + 1] = Math.sin(b) * r * .5;
+                particlePositions[i * 3 + 2] = Math.sin(a) * r;
+            }
+            particleGeometry.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
+            const particles = new THREE.Points(
+                particleGeometry,
+                new THREE.PointsMaterial({ color: 0xd9d7cf, size: .018, transparent: true, opacity: .26 })
+            );
+            root.add(particles);
+
+            function updateRelationBuffers() {
+                for (const rel of relationLines) {
+                    const a = nodes[rel.a].position, b = nodes[rel.b].position, data = rel.buffer;
+                    data[0] = a.x; data[1] = a.y; data[2] = a.z;
+                    data[3] = b.x; data[4] = b.y; data[5] = b.z;
+                    rel.line.geometry.attributes.position.needsUpdate = true;
+                }
+            }
+
+            let lastFrame = performance.now();
+            let hidden = false;
+            document.addEventListener("visibilitychange", () => { hidden = document.hidden; });
+
+            function renderThree(time) {
+                if (hidden) return;
+
+                const dt = Math.min(33, time - lastFrame || 16.67);
+                lastFrame = time;
+                const seconds = time * .001;
+
+                const story = scrollProgress;
+                const trustActive = activeSection?.id === "trustpath" || activeSection?.id === "assessment";
+                const activeMode = activeSection?.id || "intro";
+
+                const heroIcons = document.querySelectorAll("[data-hero-icon]");
+                const heroIconP = Math.min(1, Math.max(0, heroProgress));
+                heroIcons.forEach((icon, index) => {
+                    const drift = quality.motion ? Math.sin(seconds * .45 + index * .9) * 3 : 0;
+                    const lift = heroIconP * (index % 2 ? -10 : 8);
+                    const reveal = Math.min(1, Math.max(0, (heroIconP + .18) * 1.55));
+                    icon.style.opacity = String((.18 + reveal * .46) * (index === 4 ? .82 : 1));
+                    icon.style.transform = `translate3d(${drift}px,${lift}px,0)`;
+                });
+
+                root.rotation.y = seconds * .075 + story * .10;
+                root.rotation.x = Math.sin(story * 2.2) * .05;
+                root.rotation.z = 0;
+
+                particles.rotation.y = seconds * .006;
+
+                const names = ["text", "visual", "acoustic", "biometric"];
+                for (let i = 0; i < names.length; i++) {
+                    const name = names[i];
+                    const n = nodes[name];
+                    const s = n.userData.base;
+                    const influence = .84 + story * .18;
+                    const tx = s.x * influence;
+                    const ty = s.y * (.84 + story * .12);
+                    const tz = s.z + Math.sin(story * 2.0 + s.phase) * .15 + (trustActive ? .14 : 0);
+
+                    n.position.x += (tx - n.position.x) * .065;
+                    n.position.y += (ty - n.position.y) * .065;
+                    n.position.z += (tz - n.position.z) * .065;
+
+                    const velocity = .18 * quality.motion;
+                    n.rotation.x += velocity * dt * .01;
+                    n.rotation.y += velocity * 1.35 * dt * .01;
+                }
+
+                nodes.case.position.z += ((trustActive ? .18 : 0) - nodes.case.position.z) * .08;
+                const caseScale = 1 + (trustActive ? .15 : 0) + (quality.motion ? Math.sin(story * 3.5) * .025 : 0);
+                nodes.case.scale.setScalar(caseScale);
+
+                for (let i = 0; i < relationLines.length; i++) {
+                    const rel = relationLines[i];
+                    const desired = 0;
+                    rel.line.material.opacity += (desired - rel.line.material.opacity) * .12;
+                }
+
+                keyLight.intensity = 1.25 + (trustActive ? .45 : 0);
+                fillLight.intensity = 0.85 + (activeMode === "acoustic" ? .22 : 0);
+
+                camera.position.x += ((mouseX * .32) - camera.position.x) * .025;
+                camera.position.y += ((.15 + mouseY * .22) - camera.position.y) * .025;
+                camera.position.z += ((9.6 - (trustActive ? .45 : 0)) - camera.position.z) * .03;
+                camera.lookAt(0, 0, 0);
+
+                updateRelationBuffers();
+                renderer.render(threeScene, camera);
+            }
+
+            function resize() {
+                const cap = Math.min(window.devicePixelRatio || 1, 1.25);
+                renderer.setPixelRatio(cap);
+                camera.aspect = innerWidth / innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(innerWidth, innerHeight, false);
+            }
+            addEventListener("resize", resize, { passive: true });
+
+            let mouseX = 0, mouseY = 0;
+            addEventListener("pointermove", e => {
+                mouseX = (e.clientX / innerWidth - .5) * 2;
+                mouseY = (e.clientY / innerHeight - .5) * 2;
+            }, { passive: true });
+
+            anime({
+                targets: "#heroCopy",
+                translateY: [18, 0],
+                opacity: [0, 1],
+                duration: 900,
+                easing: "easeOutQuart",
+                delay: 150
+            });
+            anime({
+                targets: "#heroInstrument",
+                scale: [.92, 1],
+                opacity: [0, .72],
+                duration: 1200,
+                easing: "easeOutQuart",
+                delay: 240
+            });
+
+            // ---------- SCENE ATMOSPHERICS + REVEAL ----------
+            const sceneState = sections.map(sec => {
+                const state = { sec, bar: null, trace: null };
+
+                const stage = sec.querySelector(".scene-stage");
+                if (stage) {
+                    const trace = document.createElement("div");
+                    trace.className = "scan-trace";
+                    trace.setAttribute("aria-hidden", "true");
+                    stage.appendChild(trace);
+                    state.trace = trace;
+                }
+
+                const sp = sec.querySelector(".story-progress");
+                if (sp) {
+                    const row = document.createElement("div");
+                    row.className = "story-progress-row";
+                    while (sp.firstChild) row.appendChild(sp.firstChild);
+                    sp.appendChild(row);
+
+                    const bar = document.createElement("div");
+                    bar.className = "story-progress-bar";
+                    const fill = document.createElement("span");
+                    bar.appendChild(fill);
+                    sp.appendChild(bar);
+                    state.bar = fill;
+                }
+
+                return state;
+            });
+
+            function updateSceneAtmospheres() {
+                for (const s of sceneState) {
+                    const r = s.sec.getBoundingClientRect();
+                    const span = Math.max(1, s.sec.offsetHeight - innerHeight);
+                    const p = Math.min(1, Math.max(0, -r.top / span));
+
+                    if (s.bar) s.bar.style.transform = `scaleX(${p})`;
+                    if (s.trace) s.trace.style.transform = `translate3d(0, ${14 + p * 72}vh, 0)`;
+                }
+            }
+
+            const REVEAL_SELECTORS = [
+                ".eyebrow", ".display", ".lede", ".signal-quote", ".actions",
+                ".evidence-kicker", ".text-evidence-head", ".claim-row", ".evidence-foot",
+                ".paper", ".paper-caption",
+                ".acoustic-readout", ".signal-panel-head", ".spectral-wavefield",
+                ".spectral-readout", ".spectral-time",
+                ".identity-head", ".voice-channel", ".voice-bridge",
+                ".identity-result", ".identity-note",
+                ".live-monitor-head", ".live-monitor-line",
+                ".live-meter", ".live-monitor-foot",
+                ".trustpath-caption",
+                ".final-risk", ".final-sub", ".final-recommendation"
+            ];
+
+            const revealGroups = new Map();
+            const revealTargets = [];
+
+            REVEAL_SELECTORS.forEach(sel => {
+                $$(sel).forEach(el => {
+                    if (el.closest("#intro")) return;
+                    if (el.closest(".lui")) return;
+                    if (el.closest(".topbar")) return;
+                    if (el.classList.contains("reveal")) return;
+
+                    const sec = el.closest("section.scene");
+                    if (!sec) return;
+
+                    el.classList.add("reveal");
+                    if (!revealGroups.has(sec)) revealGroups.set(sec, []);
+                    revealGroups.get(sec).push(el);
+                    revealTargets.push(el);
+                });
+            });
+
+            revealGroups.forEach(list => {
+                list.forEach((el, i) => {
+                    el.style.setProperty("--reveal-delay", String(Math.min(i, 10)));
+                });
+            });
+
+            const revealIO = new IntersectionObserver(entries => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-revealed");
+                        revealIO.unobserve(entry.target);
+                    }
+                }
+            }, { rootMargin: "-10% 0px -14% 0px", threshold: 0.06 });
+
+            revealTargets.forEach(el => revealIO.observe(el));
+
+            // ---------- TRUSTPATH RADIAL NETWORK ENGINE ----------
+            const trustSection = document.getElementById("trustpath");
+            const trustCtx = trustCanvas ? trustCanvas.getContext("2d", { alpha: true }) : null;
+            const trustFlowState = document.getElementById("trustFlowState");
+            const trustRelationCount = document.getElementById("trustRelationCount");
+            const trustFlowCaption = document.getElementById("trustFlowCaption");
+            const trustCaseState = document.getElementById("trustCaseState");
+            const trustCase = document.getElementById("trustCase");
+            const trustNodeEls = [...document.querySelectorAll(".trust-node")];
+            const trustRelEls = [...document.querySelectorAll(".trust-rel")];
+
+            const trust = {
+                width: 0, height: 0, dpr: 1, progress: 0, target: 0, lastBucket: -1,
+                points: {},
+                edges: [
+                    { from: "trust-node--text", to: "trust-rel--claim", color: "#ef6c2f", phase: .08, width: 18 },
+                    { from: "trust-node--visual", to: "trust-rel--claim", color: "#f0eee6", phase: .15, width: 20 },
+                    { from: "trust-node--acoustic", to: "trust-rel--artifact", color: "#79c5cf", phase: .29, width: 22 },
+                    { from: "trust-node--biometric", to: "trust-rel--identity", color: "#7eb48b", phase: .41, width: 20 },
+                    { from: "trust-rel--claim", to: "trust-case", color: "#ef6c2f", phase: .53, width: 30 },
+                    { from: "trust-rel--artifact", to: "trust-case", color: "#79c5cf", phase: .64, width: 25 },
+                    { from: "trust-rel--identity", to: "trust-case", color: "#7eb48b", phase: .75, width: 22 }
+                ]
+            };
+
+            const tClamp = v => Math.max(0, Math.min(1, v));
+            const tEase = v => 1 - Math.pow(1 - v, 3);
+
+            function resizeTrust() {
+                if (!trustCanvas || !trustCtx) return;
+                const r = trustCanvas.getBoundingClientRect();
+                trust.dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+                trustCanvas.width = Math.max(1, Math.floor(r.width * trust.dpr));
+                trustCanvas.height = Math.max(1, Math.floor(r.height * trust.dpr));
+                trust.width = r.width;
+                trust.height = r.height;
+                trustCtx.setTransform(trust.dpr, 0, 0, trust.dpr, 0, 0);
+                syncTrustPoints();
+            }
+
+            function syncTrustPoints() {
+                if (!trustCanvas || !trustCtx) return;
+                const canvasRect = trustCanvas.getBoundingClientRect();
+                const lookup = {};
+
+                document.querySelectorAll(".trust-node").forEach(el => {
+                    lookup[el.classList[1]] = el;
+                });
+                document.querySelectorAll(".trust-rel").forEach(el => {
+                    lookup[el.classList[1]] = el;
+                });
+                if (trustCase) lookup["trust-case"] = trustCase;
+
+                Object.keys(lookup).forEach(key => {
+                    const r = lookup[key].getBoundingClientRect();
+                    trust.points[key] = {
+                        x: (r.left + r.width * .5) - canvasRect.left,
+                        y: (r.top + r.height * .5) - canvasRect.top
+                    };
+                });
+            }
+
+            function point(key) {
+                return trust.points[key] || { x: 0, y: 0 };
+            }
+
+            /**
+             * Draw a smooth curved connection with layered strokes and
+             * flowing energy particles. Uses De Casteljau to support
+             * partial reveals based on progress.
+             */
+            function drawConnection(edge, p, time) {
+                const q = tEase(tClamp((p - edge.phase) / .19));
+                if (q <= 0) return 0;
+
+                const a = point(edge.from), b = point(edge.to);
+
+                // Control point — slight perpendicular curve
+                const mx = (a.x + b.x) * .5;
+                const my = (a.y + b.y) * .5;
+                const dx = b.x - a.x;
+                const dy = b.y - a.y;
+                const len = Math.max(1, Math.hypot(dx, dy));
+                const perpX = -dy / len;
+                const perpY = dx / len;
+                const curveAmt = len * .10;
+                const cx = mx + perpX * curveAmt;
+                const cy = my + perpY * curveAmt;
+
+                // De Casteljau split for partial reveal
+                const P0x = a.x, P0y = a.y;
+                const P1x = cx, P1y = cy;
+                const P2x = b.x, P2y = b.y;
+
+                const P01x = P0x + (P1x - P0x) * q;
+                const P01y = P0y + (P1y - P0y) * q;
+                const P12x = P1x + (P2x - P1x) * q;
+                const P12y = P1y + (P2y - P1y) * q;
+                const P012x = P01x + (P12x - P01x) * q;
+                const P012y = P01y + (P12y - P01y) * q;
+
+                const baseWidth = Math.max(1.6, edge.width * .10);
+
+                trustCtx.save();
+                trustCtx.lineCap = "round";
+                trustCtx.lineJoin = "round";
+
+                // 1) Soft outer glow
+                trustCtx.globalAlpha = .06 + .10 * q;
+                trustCtx.strokeStyle = edge.color;
+                trustCtx.lineWidth = baseWidth * 5;
+                trustCtx.beginPath();
+                trustCtx.moveTo(P0x, P0y);
+                trustCtx.quadraticCurveTo(P01x, P01y, P012x, P012y);
+                trustCtx.stroke();
+
+                // 2) Colored mid band
+                trustCtx.globalAlpha = .38 + .45 * q;
+                trustCtx.strokeStyle = edge.color;
+                trustCtx.lineWidth = baseWidth * 1.6;
+                trustCtx.beginPath();
+                trustCtx.moveTo(P0x, P0y);
+                trustCtx.quadraticCurveTo(P01x, P01y, P012x, P012y);
+                trustCtx.stroke();
+
+                // 3) Hot white spine
+                trustCtx.globalAlpha = .58 + .35 * q;
+                trustCtx.strokeStyle = "#ffffff";
+                trustCtx.lineWidth = Math.max(.7, baseWidth * .35);
+                trustCtx.beginPath();
+                trustCtx.moveTo(P0x, P0y);
+                trustCtx.quadraticCurveTo(P01x, P01y, P012x, P012y);
+                trustCtx.stroke();
+
+                // 4) Flowing particles along the curve
+                if (q > .25 && quality.motion) {
+                    const numParticles = 3;
+                    for (let i = 0; i < numParticles; i++) {
+                        const base = ((time * .0003) + i / numParticles + edge.phase) % 1;
+                        const tp = base * q;
+                        if (tp <= .04 || tp >= .96) continue;
+
+                        const u = 1 - tp;
+                        const px = u * u * P0x + 2 * u * tp * P1x + tp * tp * P2x;
+                        const py = u * u * P0y + 2 * u * tp * P1y + tp * tp * P2y;
+
+                        // Halo
+                        trustCtx.globalAlpha = .28 * q;
+                        trustCtx.fillStyle = edge.color;
+                        trustCtx.beginPath();
+                        trustCtx.arc(px, py, 3.4, 0, Math.PI * 2);
+                        trustCtx.fill();
+
+                        // White core
+                        trustCtx.globalAlpha = .88 * q;
+                        trustCtx.fillStyle = "#ffffff";
+                        trustCtx.beginPath();
+                        trustCtx.arc(px, py, 1.1, 0, Math.PI * 2);
+                        trustCtx.fill();
+                    }
+                }
+
+                // 5) Endpoint dots
+                if (q > .96) {
+                    // Source
+                    trustCtx.globalAlpha = .92;
+                    trustCtx.fillStyle = edge.color;
+                    trustCtx.beginPath();
+                    trustCtx.arc(P0x, P0y, 3.2, 0, Math.PI * 2);
+                    trustCtx.fill();
+
+                    trustCtx.globalAlpha = 1;
+                    trustCtx.fillStyle = "#ffffff";
+                    trustCtx.beginPath();
+                    trustCtx.arc(P0x, P0y, 1.3, 0, Math.PI * 2);
+                    trustCtx.fill();
+
+                    // Target
+                    trustCtx.globalAlpha = .5;
+                    trustCtx.strokeStyle = edge.color;
+                    trustCtx.lineWidth = 1;
+                    trustCtx.beginPath();
+                    trustCtx.arc(P2x, P2y, 6, 0, Math.PI * 2);
+                    trustCtx.stroke();
+
+                    trustCtx.globalAlpha = 1;
+                    trustCtx.fillStyle = "#ffffff";
+                    trustCtx.beginPath();
+                    trustCtx.arc(P2x, P2y, 2.6, 0, Math.PI * 2);
+                    trustCtx.fill();
+                }
+
+                trustCtx.restore();
+                return q > .98 ? 1 : 0;
+            }
+
+            let trustUiBucket = -1;
+            function updateTrustUI(p, active) {
+                const bucket = Math.floor(p * 24);
+                if (bucket === trustUiBucket) return;
+                trustUiBucket = bucket;
+
+                trustFlowState.textContent =
+                    p < .25 ? "STANDBY" :
+                        p < .52 ? "ALIGNING" :
+                            p < .78 ? "CORRELATING" : "CONVERGED";
+
+                trustRelationCount.textContent = `${Math.min(2, active)} cross-evidence relationships`;
+                trustFlowCaption.textContent =
+                    p < .25 ? "Evidence waiting to align." :
+                        p < .52 ? "Evidence is entering the relationship field." :
+                            p < .78 ? "Relationship streams are resolving." :
+                                "Case structure is now inspectable.";
+
+                trustCaseState.textContent =
+                    p < .52 ? "FORMING" :
+                        p < .80 ? "CORRELATING" : "RESOLVED";
+
+                trustCase.classList.toggle("is-forming", p >= .52);
+                trustCase.classList.toggle("is-resolved", p >= .80);
+
+                const nodePhase = {
+                    "trust-node--text": .04,
+                    "trust-node--visual": .11,
+                    "trust-node--acoustic": .21,
+                    "trust-node--biometric": .30
+                };
+                trustNodeEls.forEach(el => {
+                    el.classList.toggle("is-active", p > (nodePhase[el.classList[1]] ?? 1));
+                });
+
+                const relPhase = {
+                    "trust-rel--claim": .30,
+                    "trust-rel--artifact": .48,
+                    "trust-rel--identity": .64
+                };
+                trustRelEls.forEach(el => {
+                    el.classList.toggle("is-active", p > (relPhase[el.classList[1]] ?? 1));
+                });
+            }
+
+            function drawTrustPath(time) {
+                if (!trustCtx || !trustSection) return;
+
+                syncTrustPoints();
+
+                const r = trustSection.getBoundingClientRect();
+                const span = Math.max(1, trustSection.offsetHeight - innerHeight);
+                trust.target = tClamp((-r.top) / span);
+                trust.progress += (trust.target - trust.progress) * .08;
+
+                const p = trust.progress;
+                const w = trust.width, h = trust.height;
+
+                trustCtx.clearRect(0, 0, w, h);
+
+                // Faint structural guides
+                const drift = (time * .00004) % 1;
+                trustCtx.save();
+                trustCtx.globalAlpha = .07;
+                trustCtx.strokeStyle = "rgba(242,240,235,.06)";
+                for (let i = 1; i < 5; i++) {
+                    const x = w * i / 5 + Math.sin(drift * Math.PI * 2 + i) * 4;
+                    trustCtx.beginPath();
+                    trustCtx.moveTo(x, 0);
+                    trustCtx.lineTo(x, h);
+                    trustCtx.stroke();
+                }
+                trustCtx.restore();
+
+                // Source endpoint pulses
+                trustNodeEls.forEach(el => {
+                    const cls = el.classList[1];
+                    const phase = {
+                        "trust-node--text": .04,
+                        "trust-node--visual": .11,
+                        "trust-node--acoustic": .21,
+                        "trust-node--biometric": .30
+                    }[cls];
+                    const q = tEase(tClamp((p - phase) / .18));
+                    if (q <= 0) return;
+
+                    const pt = point(cls);
+                    const color = {
+                        "trust-node--text": "#ef6c2f",
+                        "trust-node--visual": "#f0eee6",
+                        "trust-node--acoustic": "#79c5cf",
+                        "trust-node--biometric": "#7eb48b"
+                    }[cls];
+
+                    trustCtx.save();
+                    // soft halo
+                    trustCtx.globalAlpha = .14 + .38 * q;
+                    trustCtx.fillStyle = color;
+                    trustCtx.beginPath();
+                    trustCtx.arc(pt.x, pt.y, 5 + q * 2, 0, Math.PI * 2);
+                    trustCtx.fill();
+                    // crisp dot
+                    trustCtx.globalAlpha = .55 + .40 * q;
+                    trustCtx.fillStyle = "#ffffff";
+                    trustCtx.beginPath();
+                    trustCtx.arc(pt.x, pt.y, 1.4, 0, Math.PI * 2);
+                    trustCtx.fill();
+                    trustCtx.restore();
+                });
+
+                // Draw all connections
+                let active = 0;
+                trust.edges.forEach(edge => {
+                    active += drawConnection(edge, p, time);
+                });
+
+                // Relationship junction rings
+                trustRelEls.forEach(el => {
+                    const cls = el.classList[1];
+                    const phase = {
+                        "trust-rel--claim": .30,
+                        "trust-rel--artifact": .48,
+                        "trust-rel--identity": .64
+                    }[cls];
+                    const q = tEase(tClamp((p - phase) / .16));
+                    if (q <= 0) return;
+                    const pt = point(cls);
+                    const color = cls === "trust-rel--identity" ? "#7eb48b"
+                        : (cls === "trust-rel--claim" ? "#ef6c2f" : "#79c5cf");
+
+                    trustCtx.save();
+                    trustCtx.globalAlpha = .22 + .38 * q;
+                    trustCtx.strokeStyle = color;
+                    trustCtx.lineWidth = 1;
+                    trustCtx.beginPath();
+                    trustCtx.arc(pt.x, pt.y, 5 + q * 2, 0, Math.PI * 2);
+                    trustCtx.stroke();
+
+                    trustCtx.globalAlpha = .55 + .40 * q;
+                    trustCtx.fillStyle = "#ffffff";
+                    trustCtx.beginPath();
+                    trustCtx.arc(pt.x, pt.y, 1.6, 0, Math.PI * 2);
+                    trustCtx.fill();
+                    trustCtx.restore();
+                });
+
+                // Hub ring + orbital dots around the case node
+                if (p > .35) {
+                    const q = tEase(tClamp((p - .35) / .4));
+                    const pt = point("trust-case");
+                    const breathe = 1 + Math.sin(time * .0015) * .06;
+
+                    // Inner ring (just outside the case card)
+                    trustCtx.save();
+                    trustCtx.globalAlpha = .25 + .42 * q;
+                    trustCtx.strokeStyle = "#ef6c2f";
+                    trustCtx.lineWidth = 1;
+                    trustCtx.beginPath();
+                    trustCtx.arc(pt.x, pt.y, 128 * breathe, 0, Math.PI * 2);
+                    trustCtx.stroke();
+
+                    // Outer ring
+                    trustCtx.globalAlpha = .10 + .15 * q;
+                    trustCtx.beginPath();
+                    trustCtx.arc(pt.x, pt.y, 178 * breathe, 0, Math.PI * 2);
+                    trustCtx.stroke();
+
+                    // Orbital dots on the inner ring
+                    const numDots = 16;
+                    const rot = time * .0003;
+                    for (let i = 0; i < numDots; i++) {
+                        const angle = (i / numDots) * Math.PI * 2 + rot;
+                        const dx = Math.cos(angle) * 128 * breathe;
+                        const dy = Math.sin(angle) * 128 * breathe;
+                        trustCtx.globalAlpha = .35 + .45 * q;
+                        trustCtx.fillStyle = "#ef6c2f";
+                        trustCtx.beginPath();
+                        trustCtx.arc(pt.x + dx, pt.y + dy, 1.6, 0, Math.PI * 2);
+                        trustCtx.fill();
+                    }
+
+                    // Center pulse dot
+                    trustCtx.globalAlpha = .55 * q;
+                    trustCtx.fillStyle = "#ef6c2f";
+                    trustCtx.beginPath();
+                    trustCtx.arc(pt.x, pt.y, 1.8, 0, Math.PI * 2);
+                    trustCtx.fill();
+                    trustCtx.restore();
+                }
+
+                updateTrustUI(p, active);
+            }
+
+            const trustResizeObserver = new ResizeObserver(resizeTrust);
+            if (trustCanvas) trustResizeObserver.observe(trustCanvas);
+            addEventListener("resize", syncTrustPoints, { passive: true });
+            resizeTrust();
+
+            function frame(time) {
+                if (lenis) lenis.raf(time);
+                updateScrollState();
+                syncActiveSection();
+                renderThree(time);
+                drawTrustPath(time);
+                updateSceneAtmospheres();
+                requestAnimationFrame(frame);
+            }
+
+            requestAnimationFrame(frame);
+
+            syncActiveSection();
+            updateScrollState();
+        })();
+    </script>
+</body>
+
+</html>
